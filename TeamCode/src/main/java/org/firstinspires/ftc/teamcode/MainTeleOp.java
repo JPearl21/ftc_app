@@ -18,7 +18,7 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
     Add parts here as we progress
     */
 
-    // Top left, top right, bottom left, bottom right motors
+    // Top left, top right, bottom left, bottom right, arm motors
     private DcMotor tl, tr, bl, br, arm;
     // Code to run after init is hit
     public void init(){
@@ -79,7 +79,7 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
 
         // double lift = gamepad1.left_stick_y;
         double power;
-        power    = Range.clip(-gamepad1.left_stick_y,-0.5, 0.5) ;
+        power    = Range.clip(-gamepad1.left_stick_y,-0.5, 0.5) ;  //change min between -1 and 0, max between 0 and 1 to make slower/faster
         arm.setPower(power);
 
 
