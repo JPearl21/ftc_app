@@ -7,10 +7,11 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * hi iit is Eliezer in 09; Dis now Jacob 18
  * douglas edit
+ * Owen Edit
  */
 
 @TeleOp(name="Part test", group="Test")
-public class MainTeleOp extends OpMode{
+public class MainTeleOp extends OpMode{//cool bearl real cool
 
     /*
     Part declarations.
