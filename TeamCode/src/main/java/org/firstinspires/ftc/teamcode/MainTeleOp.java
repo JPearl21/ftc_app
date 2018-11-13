@@ -79,7 +79,7 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
 
         // double lift = gamepad1.left_stick_y;
         double power;
-        power    = Range.clip(-gamepad1.left_stick_y,-0.5, 0.5) ;  //change min between -1 and 0, max between 0 and 1 to make slower/faster
+        power    = Range.clip(-gamepad1.left_stick_y,-0.1, 0.1) ;  //change min between -1 and 0, max between 0 and 1 to make slower/faster
         arm.setPower(power);
 
 
