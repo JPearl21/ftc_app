@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * hi iit is Eliezer in 09; Dis now Jacob 18
  * Douglas Edit
- * Owen Edit
+ * Owen Edit (Owen is Nerd though)
  */
 
 @TeleOp(name="Part test", group="Test")
@@ -119,14 +119,14 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         strafe(gamepad1.left_stick_x, tl,tr,bl,br);
 
         double power;
-        power    = Range.clip(-gamepad1.right_stick_y, -0.45, 0.6) ;  //change min between -1 and 0, max between 0 and 1 to make slower/faster
+        power    = Range.clip(-gamepad2.right_stick_y, -0.45, 0.6) ;  //change min between -1 and 0, max between 0 and 1 to make slower/faster
         arm.setPower(power);
 
         // Check if buttons are being pressed and run servos
-        testCRServoSingleIntake(gamepad1.a, intake1, intake2);
-        testCRServoSingleOuttake(gamepad1.b, intake1, intake2);
-        testCRServoDoubleIntake(gamepad1.y, intake1, intake2, intake3, intake4);
-        testCRServoDoubleOuttake(gamepad1.x, intake1, intake2, intake3, intake4);
+        testCRServoSingleIntake(gamepad2.a, intake1, intake2);
+        testCRServoSingleOuttake(gamepad2.b, intake1, intake2);
+        testCRServoDoubleIntake(gamepad2.y, intake1, intake2, intake3, intake4);
+        testCRServoDoubleOuttake(gamepad2.x, intake1, intake2, intake3, intake4);
 
 
     }
