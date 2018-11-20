@@ -35,8 +35,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+
 
 
 /**
@@ -59,6 +61,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
      DcMotor tl, tr, bl, br, arm;
     private CRServo intake1, intake2, intake3, intake4;
+    private ColorSensor ColorSensor;
 
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -88,15 +91,19 @@ public class BasicOpMode_Linear extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+
         runtime.reset();
+        ColorSensor = hardwareMap.colorSensor.get("color");
+
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()){
-            if (runtime.seconds() < 1){
-                tr.setPower(1);
-                tl.setPower(1);
-                br.setPower(1);
-                bl.setPower(1);
+            if (opModeIsActive()){
+                telemetry.addData("Red", ColorSensor.red());
+                telemetry.addData("Green", ColorSensor.green());
+                telemetry.addData("Blue", ColorSensor.blue());
+                telemetry.addData("Luminosity", ColorSensor.alpha());
+                telemetry.update();
             }
             else{
                 tr.setPower(0);
