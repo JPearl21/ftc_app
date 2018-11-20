@@ -119,7 +119,7 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         strafe(gamepad1.left_stick_x, tl,tr,bl,br);
 
         double power;
-        power    = Range.clip(-gamepad2.right_stick_y, -0.45, 0.6) ;  //change min between -1 and 0, max between 0 and 1 to make slower/faster
+        power    = Range.clip(-gamepad2.right_stick_y, -0.35, 0.35) ;  //change min between -1 and 0, max between 0 and 1 to make slower/faster
         arm.setPower(power);
 
         // Check if buttons are being pressed and run servos
