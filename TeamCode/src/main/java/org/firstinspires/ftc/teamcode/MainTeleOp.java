@@ -86,27 +86,6 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         if(cond > 0) { dc4.setPower(1); } else {dc2.setPower(0);}
     }
 
-    //CR Servos
-    private void testCRServoSingleIntake(boolean cond, CRServo crServo, CRServo crServo2) {
-        if(cond) { crServo.setPower(-1); } else { crServo.setPower(0); }
-        if(cond) { crServo2.setPower(1); } else { crServo2.setPower(0); }
-    }
-    private void testCRServoSingleOuttake(boolean cond, CRServo crServo, CRServo crServo2) {
-        if(cond) { crServo.setPower(1); } else { crServo.setPower(0); }
-        if(cond) { crServo2.setPower(-1); } else { crServo2.setPower(0); }
-    }
-    private void testCRServoDoubleIntake(boolean cond, CRServo crServo, CRServo crServo2, CRServo crServo3, CRServo crServo4) {
-        if(cond) { crServo.setPower(-1); } else { crServo.setPower(0); }
-        if(cond) { crServo2.setPower(1); } else { crServo2.setPower(0); }
-        if(cond) { crServo3.setPower(-1); } else { crServo3.setPower(0); }
-        if(cond) { crServo4.setPower(1); } else { crServo4.setPower(0); }
-    }
-    private void testCRServoDoubleOuttake(boolean cond, CRServo crServo, CRServo crServo2, CRServo crServo3, CRServo crServo4) {
-        if(cond) { crServo.setPower(1); } else { crServo.setPower(0); }
-        if(cond) { crServo2.setPower(-1); } else { crServo2.setPower(0); }
-        if(cond) { crServo3.setPower(1); } else { crServo3.setPower(0); }
-        if(cond) { crServo4.setPower(-1); } else { crServo4.setPower(0); }
-    }
 
     // Runs repeatedly
     public void loop(){
@@ -119,14 +98,33 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         strafe(gamepad1.left_stick_x, tl,tr,bl,br);
 
         double power;
-        power    = Range.clip(-gamepad2.right_stick_y, -0.35, 0.35) ;  //change min between -1 and 0, max between 0 and 1 to make slower/faster
+        power    = Range.clip(-gamepad1.right_stick_y, -0.6, 0.6) ;  //change min between -1 and 0, max between 0 and 1 to make slower/faster
         arm.setPower(power);
 
         // Check if buttons are being pressed and run servos
-        testCRServoSingleIntake(gamepad2.a, intake1, intake2);
-        testCRServoSingleOuttake(gamepad2.b, intake1, intake2);
-        testCRServoDoubleIntake(gamepad2.y, intake1, intake2, intake3, intake4);
-        testCRServoDoubleOuttake(gamepad2.x, intake1, intake2, intake3, intake4);
+        if(gamepad1.a){
+            intake1.setPower(1);
+            intake2.setPower(-1);
+        }
+        else{if(!(gamepad1.right_bumper || gamepad1.left_bumper || gamepad1.a || gamepad1.b )){ intake1.setPower(0); intake2.setPower(0);}}
+
+        if(gamepad1.b){
+            intake3.setPower(1);
+            intake4.setPower(-1);
+        }
+        else{if(!(gamepad1.right_bumper || gamepad1.left_bumper || gamepad1.a || gamepad1.b )){ intake3.setPower(0); intake4.setPower(0);}}
+
+        if(gamepad1.right_bumper){
+            intake1.setPower(-1);
+            intake2.setPower(1);
+        }
+        else{if(!(gamepad1.right_bumper || gamepad1.left_bumper || gamepad1.a || gamepad1.b )){ intake1.setPower(0); intake2.setPower(0);}}
+
+        if(gamepad1.left_bumper){
+            intake3.setPower(-1);
+            intake4.setPower(1);
+        }
+        else{if(!(gamepad1.right_bumper || gamepad1.left_bumper || gamepad1.a || gamepad1.b )){ intake3.setPower(0); intake4.setPower(0);}}
 
 
     }
