@@ -106,4 +106,9 @@ repositories {
         dirs rootProject.file('libs')
     }
 }
+dependencies {
+    implementation project(':openCVLibrary3')
+    implementation project(':DogeCV')
+
+}
 apply from: 'build.release.gradle'
