@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.*;
+import com.qualcomm.robotcore.util.Hardware;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -19,7 +20,7 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
     */
 
     // Top left, top right, bottom left, bottom right, arm motors
-    private DcMotor tl, tr, bl, br, arm;
+    private DcMotor tl, tr, bl, br, arm, lift;
     private CRServo intake1, intake2, intake3, intake4; //1 is tr, 2 is tl, 3 is br, 4 is bl
     // Code to run after init is hit
     public void init(){
@@ -38,8 +39,10 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         intake2 = hardwareMap.crservo.get("intake2");
         intake3 = hardwareMap.crservo.get("intake3");
         intake4 = hardwareMap.crservo.get("intake4");
+        lift = hardwareMap.dcMotor.get("lift");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         // Note: motors spin clockwise by default
@@ -126,6 +129,9 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         }
         else{if(!(gamepad1.right_bumper || gamepad1.left_bumper || gamepad1.a || gamepad1.b )){ intake3.setPower(0); intake4.setPower(0);}}
 
+        if(gamepad1.right_trigger > 0){lift.setPower(gamepad1.right_trigger);}
+        else{if(gamepad1.left_trigger > 0){lift.setPower(-gamepad1.left_trigger);}
+        else{lift.setPower(0);}}
 
     }
 }
