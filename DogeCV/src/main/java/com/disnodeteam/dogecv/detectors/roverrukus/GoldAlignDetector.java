@@ -70,8 +70,6 @@ public class GoldAlignDetector extends DogeCVDetector {
         input.copyTo(workingMat);
         input.release();
 
-        Core.rotate(displayMat, displayMat, Core.ROTATE_180);
-        Core.rotate(workingMat, workingMat, Core.ROTATE_180);
 
         //Preprocess the working Mat (blur it then apply a yellow filter)
         Imgproc.GaussianBlur(workingMat,workingMat,new Size(5,5),0);
