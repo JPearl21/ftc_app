@@ -59,9 +59,9 @@ public class BasicOpMode_Linear extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-     DcMotor tl, tr, bl, br, arm;
+     DcMotor tl, tr, bl, br, arm,lift;
     private CRServo intake1, intake2, intake3, intake4;
-    private ColorSensor ColorSensor;
+    private TouchSensor t;
 
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -75,10 +75,12 @@ public class BasicOpMode_Linear extends LinearOpMode {
         bl = hardwareMap.dcMotor.get("bottom_left_wheel");
         br = hardwareMap.dcMotor.get("bottom_right_wheel");
         arm = hardwareMap.dcMotor.get("arm");
+        lift = hardwareMap.dcMotor.get("lift");
         intake1 = hardwareMap.crservo.get("intake1");
         intake2 = hardwareMap.crservo.get("intake2");
         intake3 = hardwareMap.crservo.get("intake3");
         intake4 = hardwareMap.crservo.get("intake4");
+        t= hardwareMap.touchSensor.get("t");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -93,23 +95,26 @@ public class BasicOpMode_Linear extends LinearOpMode {
         waitForStart();
 
         runtime.reset();
-        ColorSensor = hardwareMap.colorSensor.get("color");
+
+        int e = 0;
 
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()){
-            if (opModeIsActive()){
-                telemetry.addData("Red", ColorSensor.red());
-                telemetry.addData("Green", ColorSensor.green());
-                telemetry.addData("Blue", ColorSensor.blue());
-                telemetry.addData("Luminosity", ColorSensor.alpha());
-                telemetry.update();
-            }
+                if(t.isPressed()){
+                    lift.setPower(0);
+                    e ++;
+
+                }
+
             else{
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                if(e > 0){
+                    lift.setPower(0);
+                }
+                if(e == 0){
+                    lift.setPower(-0.6);
+
+                }
             }
 
         }
