@@ -94,17 +94,21 @@ public class BasicOpMode_Linear extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setTargetPosition(3892);
-        lift.setPower(-0.1);
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            while (lift.isBusy() && opModeIsActive()) {
-                telemetry.addData("Status", "Running");
-                telemetry.update();
-            }
-            if(!lift.isBusy()){lift.setPower(0);}
+       // if (runtime.time() > 24){
             lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            lift.setTargetPosition(10);
+            lift.setPower(-0.01);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+       // }
+        while (lift.isBusy() && opModeIsActive() &&runtime.time()>24) {
+            telemetry.addData("Status", "Running");
+            telemetry.update();
+        }
+        if(!lift.isBusy()){lift.setPower(0);}
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
         runtime.reset();
 
