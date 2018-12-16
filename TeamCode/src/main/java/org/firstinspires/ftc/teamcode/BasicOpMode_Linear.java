@@ -63,7 +63,6 @@ public class BasicOpMode_Linear extends LinearOpMode {
      DcMotor tl, tr, bl, br, arm,lift;
     private CRServo intake1, intake2, intake3, intake4;
     private TouchSensor t;
-    static final double MOTOR_TICK_COUNT = 3892;
 
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -96,19 +95,16 @@ public class BasicOpMode_Linear extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        int newTarget = lift.getTargetPosition() + (int)(MOTOR_TICK_COUNT/100);
-        lift.setTargetPosition(newTarget);
+        lift.setTargetPosition(3892);
         lift.setPower(-0.1);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while(opModeIsActive()) {
 
-            while (lift.isBusy()) {
+            while (lift.isBusy() && opModeIsActive()) {
                 telemetry.addData("Status", "Running");
                 telemetry.update();
             }
-            lift.setPower(0);
+            if(!lift.isBusy()){lift.setPower(0);}
             lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        }
 
         runtime.reset();
 
