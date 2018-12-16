@@ -39,6 +39,7 @@ import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import java.lang.annotation.Target;
 
 
 /**
@@ -62,6 +63,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
      DcMotor tl, tr, bl, br, arm,lift;
     private CRServo intake1, intake2, intake3, intake4;
     private TouchSensor t;
+    static final double MOTOR_TICK_COUNT = 3892;
 
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -93,30 +95,24 @@ public class BasicOpMode_Linear extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        int newTarget = lift.getTargetPosition() + (int)(MOTOR_TICK_COUNT/100);
+        lift.setTargetPosition(newTarget);
+        lift.setPower(-0.1);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while(opModeIsActive()) {
+
+            while (lift.isBusy()) {
+                telemetry.addData("Status", "Running");
+                telemetry.update();
+            }
+            lift.setPower(0);
+            lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
 
         runtime.reset();
 
-        int e = 0;
 
 
-        // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()){
-                if(t.isPressed()){
-                    lift.setPower(0);
-                    e ++;
-
-                }
-
-            else{
-                if(e > 0){
-                    lift.setPower(0);
-                }
-                if(e == 0){
-                    lift.setPower(-0.6);
-
-                }
-            }
-
-        }
     }
 }
