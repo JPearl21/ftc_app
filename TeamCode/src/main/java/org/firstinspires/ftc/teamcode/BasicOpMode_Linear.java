@@ -84,6 +84,8 @@ public class BasicOpMode_Linear extends LinearOpMode {
         t= hardwareMap.touchSensor.get("t");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -91,32 +93,25 @@ public class BasicOpMode_Linear extends LinearOpMode {
         tl.setDirection(DcMotor.Direction.FORWARD);
         bl.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.FORWARD);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        while (runtime.time() < 2.5){
-            lift.setPower(-0.5);
-        }
-       // if (runtime.time() > 24){
-          //  lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            //lift.setTargetPosition(10);
-            //lift.setPower(-0.01);
-            //lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-       // }
-        //while (lift.isBusy() && opModeIsActive() &&runtime.time()>24) {
-          //  telemetry.addData("Status", "Running");
-            //telemetry.update();
-        //}
-        //if(!lift.isBusy()){lift.setPower(0);}
-        //lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        pEncoderMotorRun(0.0018,2423, lift);
 
 
         runtime.reset();
 
 
 
+    }
+
+    private void pEncoderMotorRun(double kP, double target, DcMotor driveMotor) { //nate
+        double error = Math.abs(target - driveMotor.getCurrentPosition());
+        while (error > 1 && opModeIsActive()) {
+            driveMotor.setPower(kP * error);
+            error = Math.abs(target - driveMotor.getCurrentPosition());
+        }
     }
 }

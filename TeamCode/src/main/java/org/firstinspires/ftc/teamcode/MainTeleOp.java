@@ -43,7 +43,9 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Note: motors spin clockwise by default
 
@@ -101,7 +103,7 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         strafe(gamepad1.left_stick_x, tl,tr,bl,br);
 
         double power;
-        power    = Range.clip(-gamepad1.right_stick_y, -0.6, 0.6) ;  //change min between -1 and 0, max between 0 and 1 to make slower/faster
+        power    = Range.clip(-gamepad1.right_stick_y, -1, 1) ;  //change min between -1 and 0, max between 0 and 1 to make slower/faster
         arm.setPower(power);
 
         // Check if buttons are being pressed and run servos
@@ -132,6 +134,8 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         if(gamepad1.right_trigger > 0){lift.setPower(gamepad1.right_trigger);}
         else{if(gamepad1.left_trigger > 0){lift.setPower(-gamepad1.left_trigger);}
         else{lift.setPower(0);}}
+
+        telemetry.addLine(String.valueOf(lift.getCurrentPosition()));
 
     }
 }
