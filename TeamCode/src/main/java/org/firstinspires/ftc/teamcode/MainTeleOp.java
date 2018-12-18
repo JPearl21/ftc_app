@@ -22,6 +22,9 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
     // Top left, top right, bottom left, bottom right, arm motors
     private DcMotor tl, tr, bl, br, arm, lift;
     private CRServo intake1, intake2, intake3, intake4; //1 is tr, 2 is tl, 3 is br, 4 is bl
+    private float   leftPower, rightPower, xValue, yValue;
+
+
     // Code to run after init is hit
     public void init(){
 
@@ -47,12 +50,19 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        yValue = gamepad1.right_stick_y;
+        xValue = gamepad1.right_stick_x;
+
+        leftPower =  yValue - xValue;
+        rightPower = yValue + xValue;
+
         // Note: motors spin clockwise by default
 
 
     }
 
     // Runs given motor at 1 when cond is true
+
 
     //top left and top right switch
     private void testMotor(boolean cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4 ) {
@@ -69,38 +79,49 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
     }
 
     private void testMotorright(boolean cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4 ) {
-        if(cond) { dc.setPower(-1); } else { dc.setPower(0); }   //changed from 1 to -1
-        if(cond) { dc2.setPower(1); } else { dc2.setPower(0); }    // no change
+        if(cond) { dc.setPower(1); } else { dc.setPower(0); }   //changed from 1 to -1
+        if(cond) { dc2.setPower(0); } else { dc2.setPower(0); }    // no change
         if(cond) { dc3.setPower(1); } else { dc3.setPower(0); } //changed from 1 to -1
-        if(cond) { dc4.setPower(-1); } else { dc4.setPower(0); } // no change
+        if(cond) { dc4.setPower(0); } else { dc4.setPower(0); } // no change
     }
     private void testMotorleft(boolean cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4 ) {
-        if(cond) { dc.setPower(1); } else { dc.setPower(0); }  //no change
-        if(cond) { dc2.setPower(-1); } else { dc2.setPower(0); }    //changed from 1 to -1
-        if(cond) { dc3.setPower(-1); } else { dc3.setPower(0); }    //no change
+        if(cond) { dc.setPower(0); } else { dc.setPower(0); }  //no change
+        if(cond) { dc2.setPower(1); } else { dc2.setPower(0); }    //changed from 1 to -1
+        if(cond) { dc3.setPower(0); } else { dc3.setPower(0); }    //no change
         if(cond) { dc4.setPower(1); } else { dc4.setPower(0); }    //changed from 1 to -1
     }
-    private void strafe(double cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4){
-        if(cond < 0) { dc.setPower(1); } else {dc.setPower(0);}
-        if(cond < 0) { dc2.setPower(-1); } else {dc2.setPower(0);}
-        if(cond < 0) { dc3.setPower(1); } else {dc3.setPower(0);}
-        if(cond < 0) { dc4.setPower(-1); } else {dc2.setPower(0);}
-        if(cond > 0) { dc.setPower(-1); } else {dc.setPower(0);}
-        if(cond > 0) { dc2.setPower(1); } else {dc2.setPower(0);}
-        if(cond > 0) { dc3.setPower(-1);} else {dc3.setPower(0);}
-        if(cond > 0) { dc4.setPower(1); } else {dc2.setPower(0);}
+    private void straferight(boolean cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4){
+        if(cond) { dc.setPower(1); } else {dc.setPower(0);}
+        if(cond) { dc2.setPower(-1); } else {dc2.setPower(0);}
+        if(cond) { dc3.setPower(1);} else {dc3.setPower(0);}
+        if(cond) { dc4.setPower(-1); } else {dc2.setPower(0);}
+    }
+    private void strafeleft(boolean cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4){
+        if(cond) { dc.setPower(-1); } else {dc.setPower(0);}
+        if(cond) { dc2.setPower(1); } else {dc2.setPower(0);}
+        if(cond) { dc3.setPower(-1);} else {dc3.setPower(0);}
+        if(cond) { dc4.setPower(1); } else {dc2.setPower(0);}
+
     }
 
 
     // Runs repeatedly
     public void loop(){
         // Check if buttons are being pressed and run motors
-        testMotor(gamepad1.dpad_up, tl, tr, bl, br);
+
+        tl.setPower(Range.clip(leftPower, -1.0, 1.0));
+        bl.setPower(Range.clip(leftPower, -1.0, 1.0));
+        tr.setPower(Range.clip(rightPower, -1.0, 1.0));
+        br.setPower(Range.clip(rightPower, -1.0, 1.0));
+
+        /*testMotor(gamepad1.dpad_up, tl, tr, bl, br);
         testMotorback(gamepad1.dpad_down, tl, tr, bl, br);
         testMotorright(gamepad1.dpad_right, tl, tr, bl, br);
-        testMotorleft(gamepad1.dpad_left, tl, tr, bl, br);
+        testMotorleft(gamepad1.dpad_left, tl, tr, bl, br);*/
 
-        strafe(gamepad1.left_stick_x, tl,tr,bl,br);
+        straferight(gamepad1.dpad_right, tl,tr,bl,br);
+        strafeleft(gamepad1.dpad_left, tl,tr,bl,br);
+
 
         double power;
         power    = Range.clip(-gamepad1.right_stick_y, -1, 1) ;  //change min between -1 and 0, max between 0 and 1 to make slower/faster
