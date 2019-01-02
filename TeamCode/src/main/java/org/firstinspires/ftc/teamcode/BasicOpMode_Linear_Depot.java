@@ -84,7 +84,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         intake4 = hardwareMap.crservo.get("intake4");
         t= hardwareMap.touchSensor.get("t");
 
-        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);//braking for the arm to limit the power
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -129,7 +129,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
     }
 
-    private void pEncoderMotorRun(double kP, double target, DcMotor driveMotor) { //nate
+    private void pEncoderMotorRun(double kP, double target, DcMotor driveMotor) { //nate; continually referencing the position and timing
         double error = Math.abs(target - driveMotor.getCurrentPosition());
         double time;
         time = runtime.time();

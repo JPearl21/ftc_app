@@ -127,17 +127,17 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
 
 
-        runtime.reset();
+        runtime.reset();//resets the timer so that the autonomous continually runs through the code.
 
 
 
     }
 
     private void pEncoderMotorRun(double kP, double target, DcMotor driveMotor) { //nate
-        double error = Math.abs(target - driveMotor.getCurrentPosition());
+        double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
         double time;
         time = runtime.time();
-        while (error > 1 && opModeIsActive()) {
+        while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
             driveMotor.setPower(kP * error);
             error = Math.abs(target - driveMotor.getCurrentPosition());
         }
