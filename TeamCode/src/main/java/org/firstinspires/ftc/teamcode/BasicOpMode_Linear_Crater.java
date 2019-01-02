@@ -56,7 +56,7 @@ import java.lang.annotation.Target;
  */
 
 @Autonomous (name="Autonomous", group="Linear Opmode")
-public class BasicOpMode_Linear extends LinearOpMode {
+public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -68,7 +68,6 @@ public class BasicOpMode_Linear extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        telemetry.addData("Jordan Kramer", "Is Cool");
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
@@ -111,9 +110,16 @@ public class BasicOpMode_Linear extends LinearOpMode {
 
     private void pEncoderMotorRun(double kP, double target, DcMotor driveMotor) { //nate
         double error = Math.abs(target - driveMotor.getCurrentPosition());
+        double time;
+        time = runtime.time();
         while (error > 1 && opModeIsActive()) {
             driveMotor.setPower(kP * error);
             error = Math.abs(target - driveMotor.getCurrentPosition());
         }
+        double time2 = time + 1;
+        while(time2 > time){}
+
+
+
     }
 }
