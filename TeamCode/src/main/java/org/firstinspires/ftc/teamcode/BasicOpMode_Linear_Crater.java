@@ -102,15 +102,17 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         pEncoderMotorRun(0.0018,2423, lift);
 
 
-        tr.setPower(0.1);
-        tl.setPower(-0.1);
-        br.setPower(0.1);
-        bl.setPower(-0.1);
-        sleep(750);
+        tr.setPower(0.6);
+        tl.setPower(-0.6);
+        br.setPower(0.6);
+        bl.setPower(-0.6);
+        sleep(250);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
         bl.setPower(0);
+
+        sleep(100);
 
         tr.setPower(0.3);
         tl.setPower(0.3);

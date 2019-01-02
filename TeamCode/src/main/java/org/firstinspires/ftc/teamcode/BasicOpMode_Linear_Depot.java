@@ -30,12 +30,16 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
+import java.lang.annotation.Target;
 
 
 /**
@@ -51,12 +55,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous (name="Autonomous", group="Linear Opmode")
+@Autonomous (name="Autonomous Depot", group="Linear Opmode")
 public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-     DcMotor tl, tr, bl, br, arm,lift;
+    DcMotor tl, tr, bl, br, arm,lift;
     private CRServo intake1, intake2, intake3, intake4;
     private TouchSensor t;
 
@@ -97,6 +101,27 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
         pEncoderMotorRun(0.0018,2423, lift);
 
+        tr.setPower(0.6);
+        tl.setPower(-0.6);
+        br.setPower(0.6);
+        bl.setPower(-0.6);
+        sleep(250);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        sleep(100);
+
+        tr.setPower(0.3);
+        tl.setPower(0.3);
+        br.setPower(0.3);
+        bl.setPower(0.3);
+        sleep(1000);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
 
         runtime.reset();
 
@@ -106,10 +131,13 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
     private void pEncoderMotorRun(double kP, double target, DcMotor driveMotor) { //nate
         double error = Math.abs(target - driveMotor.getCurrentPosition());
+        double time;
+        time = runtime.time();
         while (error > 1 && opModeIsActive()) {
             driveMotor.setPower(kP * error);
             error = Math.abs(target - driveMotor.getCurrentPosition());
         }
 
     }
+
 }
