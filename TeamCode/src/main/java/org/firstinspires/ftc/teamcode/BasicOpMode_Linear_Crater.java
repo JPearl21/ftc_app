@@ -100,6 +100,17 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         waitForStart();
 
         pEncoderMotorRun(0.0018,2423, lift);
+        tr.setPower(1);
+        tl.setPower(1);
+        br.setPower(1);
+        bl.setPower(1);
+        sleep(250);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+
 
 
         runtime.reset();//resets the timer so that the autonomous continually runs through the code.
@@ -116,10 +127,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
             driveMotor.setPower(kP * error);
             error = Math.abs(target - driveMotor.getCurrentPosition());
         }
-        double time2 = time + 1;
-        while(time2 > time){}
-
-
 
     }
+
 }
