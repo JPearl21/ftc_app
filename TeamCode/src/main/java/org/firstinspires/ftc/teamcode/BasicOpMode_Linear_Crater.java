@@ -55,7 +55,7 @@ import java.lang.annotation.Target;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous (name="Autonomous", group="Linear Opmode")
+@Autonomous (name="Autonomous Crater", group="Linear Opmode")
 public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
     // Declare OpMode members.
@@ -100,11 +100,23 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         waitForStart();
 
         pEncoderMotorRun(0.0018,2423, lift);
-        tr.setPower(1);
-        tl.setPower(1);
-        br.setPower(1);
-        bl.setPower(1);
-        sleep(250);
+
+
+        tr.setPower(0.1);
+        tl.setPower(-0.1);
+        br.setPower(0.1);
+        bl.setPower(-0.1);
+        sleep(750);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        tr.setPower(0.3);
+        tl.setPower(0.3);
+        br.setPower(0.3);
+        bl.setPower(0.3);
+        sleep(1000);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
