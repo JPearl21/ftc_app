@@ -118,6 +118,7 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         telemetry.addData("Mode", "running");
         telemetry.addData("stick", "  y=" + yValue + "  x=" + xValue);
         telemetry.addData("power", "  left=" + leftPower + "  right=" + rightPower);
+        telemetry.addData("Jordan Kramer", "Is Cool");
         telemetry.update();
 
         testMotorright(gamepad1.right_stick_x, tl, tr, bl, br);
