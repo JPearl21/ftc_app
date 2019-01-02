@@ -175,7 +175,7 @@ public class GoldAlignExample extends LinearOpMode{
                     bl.setPower(1);
                     sleep(1000);
                 }
-                else{  tl.setPower(0);
+                else{  tl.setPower(0);//finishing of the code
                     tr.setPower(0);
                     br.setPower(0);
                     bl.setPower(0);
