@@ -138,7 +138,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         tl.setPower(-1);
         br.setPower(-1);
         bl.setPower(-1);
-        sleep(600);
+        sleep(675);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
