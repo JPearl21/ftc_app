@@ -76,24 +76,24 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
     private void testMotorright(double cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4 ) {
         if(cond > 0) { dc.setPower(1); } else { dc.setPower(0); }   //changed from 1 to -1
         if(cond > 0) { dc2.setPower(0); } else { dc2.setPower(0); }    // no change
-        if(cond > 0) { dc3.setPower(1); } else { dc3.setPower(0); } //changed from 1 to -1
-        if(cond > 0) { dc4.setPower(0); } else { dc4.setPower(0); } // no change
+        if(cond > 0) { dc3.setPower(0); } else { dc3.setPower(0); } //changed from 1 to -1
+        if(cond > 0) { dc4.setPower(1); } else { dc4.setPower(0); } // no change
     }
     private void testMotorleft(double cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4 ) {
         if(cond < 0) { dc.setPower(0); } else { dc.setPower(0); }  //no change
         if(cond < 0) { dc2.setPower(1); } else { dc2.setPower(0); }    //changed from 1 to -1
-        if(cond < 0) { dc3.setPower(0); } else { dc3.setPower(0); }    //no change
-        if(cond < 0) { dc4.setPower(1); } else { dc4.setPower(0); }    //changed from 1 to -1
+        if(cond < 0) { dc3.setPower(1); } else { dc3.setPower(0); }    //no change
+        if(cond < 0) { dc4.setPower(0); } else { dc4.setPower(0); }    //changed from 1 to -1
     }
     private void strafe(double cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4){//code to make the robot strafe
-        if(cond > 0) { dc.setPower(1); } else {dc.setPower(0);}
-        if(cond > 0) { dc2.setPower(-1); } else {dc2.setPower(0);}
-        if(cond > 0) { dc3.setPower(1);} else {dc3.setPower(0);}
-        if(cond > 0) { dc4.setPower(-1); } else {dc2.setPower(0);}
-        if(cond < 0) { dc.setPower(-1); } else {dc.setPower(0);}
-        if(cond < 0) { dc2.setPower(1); } else {dc2.setPower(0);}
-        if(cond < 0) { dc3.setPower(-1);} else {dc3.setPower(0);}
-        if(cond < 0) { dc4.setPower(1); } else {dc2.setPower(0);}
+        if(cond < 0) { dc.setPower(1); } else {dc.setPower(0);} //right
+        if(cond < 0) { dc2.setPower(-1); } else {dc2.setPower(0);}
+        if(cond < 0) { dc3.setPower(1);} else {dc3.setPower(0);}
+        if(cond < 0) { dc4.setPower(-1); } else {dc2.setPower(0);}
+        if(cond > 0) { dc.setPower(-1); } else {dc.setPower(0);} // left
+        if(cond > 0) { dc2.setPower(1); } else {dc2.setPower(0);}
+        if(cond > 0) { dc3.setPower(-1);} else {dc3.setPower(0);}
+        if(cond > 0) { dc4.setPower(1); } else {dc2.setPower(0);}
 
     }
 
