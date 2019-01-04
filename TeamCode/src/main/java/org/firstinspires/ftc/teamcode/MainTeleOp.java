@@ -61,39 +61,52 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
 
     //top left and top right switch
     private void testMotor(boolean cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4 ) {
-        if(cond) { dc.setPower(1); } else { dc.setPower(0); }  //changed from 1 to -1
-        if(cond) { dc2.setPower(1); } else { dc2.setPower(0); }
-        if(cond) { dc3.setPower(1); } else { dc3.setPower(0); } //no change
-        if(cond) { dc4.setPower(1); } else { dc4.setPower(0); } //no change
+        if(cond) { dc.setPower(-1); } else { dc.setPower(0); }  //changed from 1 to -1
+        if(cond) { dc2.setPower(-1); } else { dc2.setPower(0); }
+        if(cond) { dc3.setPower(-1); } else { dc3.setPower(0); } //no change
+        if(cond) { dc4.setPower(-1); } else { dc4.setPower(0); } //no change
     }
     private void testMotorback(boolean cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4 ) {
-        if(cond) { dc.setPower(-1); } else { dc.setPower(0); }   //changed from -1 to 1
-        if(cond) { dc2.setPower(-1); } else { dc2.setPower(0); } //changed from -1 to 1
-        if(cond) { dc3.setPower(-1); } else { dc3.setPower(0); }    //no change
-        if(cond) { dc4.setPower(-1); } else { dc4.setPower(0); }    //no change
+        if(cond) { dc.setPower(1); } else { dc.setPower(0); }   //changed from -1 to 1
+        if(cond) { dc2.setPower(1); } else { dc2.setPower(0); } //changed from -1 to 1
+        if(cond) { dc3.setPower(1); } else { dc3.setPower(0); }    //no change
+        if(cond) { dc4.setPower(1); } else { dc4.setPower(0); }    //no change
     }
 
     private void testMotorright(double cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4 ) {
+
+        tl.setDirection(DcMotorSimple.Direction.FORWARD);
+        bl.setDirection(DcMotorSimple.Direction.FORWARD);
+        tr.setDirection(DcMotorSimple.Direction.FORWARD);
+        br.setDirection(DcMotorSimple.Direction.FORWARD);
+
         if(cond > 0) { dc.setPower(1); } else { dc.setPower(0); }   //changed from 1 to -1
-        if(cond > 0) { dc2.setPower(0); } else { dc2.setPower(0); }    // no change
-        if(cond > 0) { dc3.setPower(0); } else { dc3.setPower(0); } //changed from 1 to -1
+        if(cond > 0) { dc2.setPower(-1); } else { dc2.setPower(0); }    // no change
+        if(cond > 0) { dc3.setPower(-1); } else { dc3.setPower(0); } //changed from 1 to -1
         if(cond > 0) { dc4.setPower(1); } else { dc4.setPower(0); } // no change
     }
     private void testMotorleft(double cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4 ) {
-        if(cond < 0) { dc.setPower(0); } else { dc.setPower(0); }  //no change
+
+        tl.setDirection(DcMotorSimple.Direction.FORWARD);
+        bl.setDirection(DcMotorSimple.Direction.FORWARD);
+        tr.setDirection(DcMotorSimple.Direction.FORWARD);
+        br.setDirection(DcMotorSimple.Direction.FORWARD);
+
+
+        if(cond < 0) { dc.setPower(-1); } else { dc.setPower(0); }  //no change
         if(cond < 0) { dc2.setPower(1); } else { dc2.setPower(0); }    //changed from 1 to -1
         if(cond < 0) { dc3.setPower(1); } else { dc3.setPower(0); }    //no change
-        if(cond < 0) { dc4.setPower(0); } else { dc4.setPower(0); }    //changed from 1 to -1
+        if(cond < 0) { dc4.setPower(-1); } else { dc4.setPower(0); }    //changed from 1 to -1
     }
     private void strafe(double cond, DcMotor dc, DcMotor dc2, DcMotor dc3, DcMotor dc4){//code to make the robot strafe
-        if(cond < 0) { dc.setPower(1); } else {dc.setPower(0);} //right
-        if(cond < 0) { dc2.setPower(-1); } else {dc2.setPower(0);}
-        if(cond < 0) { dc3.setPower(1);} else {dc3.setPower(0);}
-        if(cond < 0) { dc4.setPower(-1); } else {dc2.setPower(0);}
-        if(cond > 0) { dc.setPower(-1); } else {dc.setPower(0);} // left
-        if(cond > 0) { dc2.setPower(1); } else {dc2.setPower(0);}
-        if(cond > 0) { dc3.setPower(-1);} else {dc3.setPower(0);}
-        if(cond > 0) { dc4.setPower(1); } else {dc2.setPower(0);}
+        if(cond > 0) { dc.setPower(1); } else {dc.setPower(0);} //right
+        if(cond > 0) { dc2.setPower(-1); } else {dc2.setPower(0);}
+        if(cond > 0) { dc3.setPower(1);} else {dc3.setPower(0);}
+        if(cond > 0) { dc4.setPower(-1); } else {dc2.setPower(0);}
+        if(cond < 0) { dc.setPower(-1); } else {dc.setPower(0);} // left
+        if(cond < 0) { dc2.setPower(1); } else {dc2.setPower(0);}
+        if(cond < 0) { dc3.setPower(-1);} else {dc3.setPower(0);}
+        if(cond < 0) { dc4.setPower(1); } else {dc2.setPower(0);}
 
     }
 
@@ -105,6 +118,11 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
 
         yValue = gamepad1.left_stick_y;
         xValue = gamepad1.left_stick_x;
+
+        tl.setDirection(DcMotorSimple.Direction.REVERSE);
+        bl.setDirection(DcMotorSimple.Direction.REVERSE);
+        tr.setDirection(DcMotorSimple.Direction.REVERSE);
+        br.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftPower =  yValue - xValue;
         rightPower = yValue + xValue;
@@ -129,38 +147,38 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         power    = Range.clip(-gamepad1.right_stick_y, -0.6, 0.6) ;//change min between -1 and 0, max between 0 and 1 to make slower/faster
         arm.setPower(power);*/
 
-        if(gamepad1.dpad_up){arm.setPower(-1);}
-        if(gamepad1.dpad_down){arm.setPower(1);}
+        if(gamepad2.dpad_up){arm.setPower(-1);}
+        if(gamepad2.dpad_down){arm.setPower(1);}
 
-        if(!(gamepad1.dpad_up || gamepad1.dpad_down)){arm.setPower(0);}
+        if(!(gamepad2.dpad_up || gamepad2.dpad_down)){arm.setPower(0);}
 
         // Check if buttons are being pressed and run servos
-        if(gamepad1.a){
+        if(gamepad2.a){
             intake1.setPower(1);
             intake2.setPower(-1);
         }
-        else{if(!(gamepad1.right_bumper || gamepad1.left_bumper || gamepad1.a || gamepad1.b )){ intake1.setPower(0); intake2.setPower(0);}}
+        else{if(!(gamepad2.right_bumper || gamepad2.left_bumper || gamepad2.a || gamepad2.b )){ intake1.setPower(0); intake2.setPower(0);}}
 
-        if(gamepad1.b){
+        if(gamepad2.b){
             intake3.setPower(1);
             intake4.setPower(-1);
         }
-        else{if(!(gamepad1.right_bumper || gamepad1.left_bumper || gamepad1.a || gamepad1.b )){ intake3.setPower(0); intake4.setPower(0);}}
+        else{if(!(gamepad2.right_bumper || gamepad2.left_bumper || gamepad2.a || gamepad2.b )){ intake3.setPower(0); intake4.setPower(0);}}
 
-        if(gamepad1.right_bumper){
+        if(gamepad2.right_bumper){
             intake1.setPower(-1);
             intake2.setPower(1);
         }
-        else{if(!(gamepad1.right_bumper || gamepad1.left_bumper || gamepad1.a || gamepad1.b )){ intake1.setPower(0); intake2.setPower(0);}}
+        else{if(!(gamepad2.right_bumper || gamepad2.left_bumper || gamepad2.a || gamepad2.b )){ intake1.setPower(0); intake2.setPower(0);}}
 
-        if(gamepad1.left_bumper){
+        if(gamepad2.left_bumper){
             intake3.setPower(-1);
             intake4.setPower(1);
         }
-        else{if(!(gamepad1.right_bumper || gamepad1.left_bumper || gamepad1.a || gamepad1.b )){ intake3.setPower(0); intake4.setPower(0);}}
+        else{if(!(gamepad2.right_bumper || gamepad2.left_bumper || gamepad2.a || gamepad2.b )){ intake3.setPower(0); intake4.setPower(0);}}
 
-        if(gamepad1.right_trigger > 0){lift.setPower(gamepad1.right_trigger);}
-        else{if(gamepad1.left_trigger > 0){lift.setPower(-gamepad1.left_trigger);}
+        if(gamepad2.right_trigger > 0){lift.setPower(gamepad2.right_trigger);}
+        else{if(gamepad2.left_trigger > 0){lift.setPower(-gamepad2.left_trigger);}
         else{lift.setPower(0);}}
 
         telemetry.addLine(String.valueOf(lift.getCurrentPosition()));

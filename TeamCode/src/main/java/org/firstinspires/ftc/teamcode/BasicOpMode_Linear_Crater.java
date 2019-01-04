@@ -66,6 +66,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
+        telemetry.addData("Debbie" ,"Lilly");
         telemetry.update();
 
 
@@ -101,6 +102,8 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
         pEncoderMotorRun(0.0018,2423, lift);
 
+        lift.setPower(0);
+
 
         tr.setPower(0);
         tl.setPower(0.5);
@@ -118,21 +121,23 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         tl.setPower(1);
         br.setPower(-1);
         bl.setPower(1);
-        sleep(1000);
+        sleep(700);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
         bl.setPower(0);
 
-        tr.setPower(-1);
-        tl.setPower(1);
-        br.setPower(1);
-        bl.setPower(-1);
-        sleep(750);
+        tr.setPower(1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(1);
+        sleep(580);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
         bl.setPower(0);
+
+        sleep(1000);
 
         tr.setPower(-1);
         tl.setPower(-1);
