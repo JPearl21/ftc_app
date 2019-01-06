@@ -166,7 +166,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         intake3.setPower(1);
         intake4.setPower(-1);
         telemetry.addLine("Outtake run");
-        sleep(3000);
+        sleep(5500);
         intake1.setPower(0);
         intake2.setPower(0);
         intake3.setPower(0);
