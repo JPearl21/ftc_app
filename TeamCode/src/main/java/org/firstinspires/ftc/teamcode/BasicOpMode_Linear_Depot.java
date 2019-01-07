@@ -82,7 +82,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
         detector.useDefaults(); // Set detector to use default settings
         detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
-        detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
+        detector.alignPosOffset = 310; // How far from center frame to offset this alignment zone.
         detector.downscale = 0.4; // How much to downscale the input frames
 
         detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
@@ -147,7 +147,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         tl.setPower(1);
         br.setPower(-1);
         bl.setPower(1);
-        sleep(700);
+        sleep(500);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
@@ -168,7 +168,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         sleep(1000);
 
         //moves forward
-        tr.setPower(-1);
+       /* tr.setPower(-1);
         tl.setPower(-1);
         br.setPower(-1);
         bl.setPower(-1);
@@ -195,13 +195,32 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         intake2.setPower(0);
         intake3.setPower(0);
         intake4.setPower(0);
-        telemetry.addLine("Outtake stopped");
+        telemetry.addLine("Outtake stopped"); */
 
-        if(detector.getAligned()){
+        if(detector.isFound()){
             telemetry.addLine("Aligned");
+            tr.setPower(-1);
+            tl.setPower(-1);
+            br.setPower(-1);
+            bl.setPower(-1);
+            sleep(675);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
         }
         else{
             telemetry.addLine("Not Aligned");
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(-1);
+            bl.setPower(1);
+            sleep(500);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
         }
 
         runtime.reset();
