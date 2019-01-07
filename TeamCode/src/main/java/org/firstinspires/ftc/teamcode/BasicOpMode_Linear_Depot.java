@@ -159,7 +159,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         tl.setPower(-1);
         br.setPower(-1);
         bl.setPower(1);
-        sleep(580);
+        sleep(580*2);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
@@ -200,9 +200,9 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         if(detector.isFound()){
             telemetry.addLine("Aligned");
             tr.setPower(-1);
-            tl.setPower(-1);
+            tl.setPower(1);
             br.setPower(-1);
-            bl.setPower(-1);
+            bl.setPower(1);
             sleep(675);
             tr.setPower(0);
             tl.setPower(0);
@@ -211,11 +211,11 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         }
         else{
             telemetry.addLine("Not Aligned");
-            tr.setPower(-1);
-            tl.setPower(1);
-            br.setPower(-1);
-            bl.setPower(1);
-            sleep(500);
+            tr.setPower(-0.4);
+            tl.setPower(-0.4);
+            br.setPower(-0.4);
+            bl.setPower(-0.4);
+            sleep(800);
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
