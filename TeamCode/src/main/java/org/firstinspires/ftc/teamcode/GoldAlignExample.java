@@ -135,7 +135,7 @@ public class GoldAlignExample extends LinearOpMode{
     public void runOpMode() {
         telemetry.addData("Status", "DogeCV 2018.0 - Gold Align Example");
         detector = new GoldAlignDetector(); // Create detector
-        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance(),1,false); // Initialize it with the app context and camera
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
         detector.useDefaults(); // Set detector to use default settings
 
 
@@ -166,7 +166,6 @@ public class GoldAlignExample extends LinearOpMode{
         waitForStart();
         runtime.reset();
         while (opModeIsActive()) {
-            if (opModeIsActive() && runtime.time() < 1) {
                 telemetry.addData("IsAligned", detector.getAligned()); // Is the bot aligned with the gold mineral?
                 telemetry.addData("X Pos", detector.getXPosition()); // Gold X position.
                 if (detector.isFound() && detector.getAligned()) {
@@ -174,16 +173,13 @@ public class GoldAlignExample extends LinearOpMode{
                     tr.setPower(1);
                     br.setPower(1);
                     bl.setPower(1);
+                    sleep(1000);
                 }
-                else{  tl.setPower(0);
+                else{  tl.setPower(0);//finishing of the code
                     tr.setPower(0);
                     br.setPower(0);
-                    bl.setPower(0);}
-            }
-            else{  tl.setPower(0);
-                tr.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);}
+                    bl.setPower(0);
+                }
         }
     }
 }

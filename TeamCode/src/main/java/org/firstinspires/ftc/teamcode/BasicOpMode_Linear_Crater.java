@@ -39,6 +39,7 @@ import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import java.lang.annotation.Target;
 
 
 /**
@@ -54,18 +55,20 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous (name="Autonomous", group="Linear Opmode")
-public class BasicOpMode_Linear extends LinearOpMode {
+@Autonomous (name="Autonomous Crater", group="Linear Opmode")
+public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-     DcMotor tl, tr, bl, br, arm;
+     DcMotor tl, tr, bl, br, arm,lift;
     private CRServo intake1, intake2, intake3, intake4;
-    private ColorSensor ColorSensor;
+    private TouchSensor t;
 
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
+        telemetry.addData("Debbie" ,"Lilly");
         telemetry.update();
+
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
@@ -75,12 +78,16 @@ public class BasicOpMode_Linear extends LinearOpMode {
         bl = hardwareMap.dcMotor.get("bottom_left_wheel");
         br = hardwareMap.dcMotor.get("bottom_right_wheel");
         arm = hardwareMap.dcMotor.get("arm");
+        lift = hardwareMap.dcMotor.get("lift");
         intake1 = hardwareMap.crservo.get("intake1");
         intake2 = hardwareMap.crservo.get("intake2");
         intake3 = hardwareMap.crservo.get("intake3");
         intake4 = hardwareMap.crservo.get("intake4");
+        t= hardwareMap.touchSensor.get("t");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -88,30 +95,78 @@ public class BasicOpMode_Linear extends LinearOpMode {
         tl.setDirection(DcMotor.Direction.FORWARD);
         bl.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.FORWARD);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        runtime.reset();
-        ColorSensor = hardwareMap.colorSensor.get("color");
+        pEncoderMotorRun(0.0018,2423, lift);
+
+        lift.setPower(0);
 
 
-        // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()){
-            if (opModeIsActive()){
-                telemetry.addData("Red", ColorSensor.red());
-                telemetry.addData("Green", ColorSensor.green());
-                telemetry.addData("Blue", ColorSensor.blue());
-                telemetry.addData("Luminosity", ColorSensor.alpha());
-                telemetry.update();
-            }
-            else{
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-            }
+        tr.setPower(0);
+        tl.setPower(0.5);
+        br.setPower(0.5);
+        bl.setPower(0);
+        sleep(250);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
 
-        }
+        sleep(100);
+
+        tr.setPower(-1);
+        tl.setPower(1);
+        br.setPower(-1);
+        bl.setPower(1);
+        sleep(700);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        tr.setPower(1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(1);
+        sleep(580);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        sleep(1000);
+
+        tr.setPower(-1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(-1);
+        sleep(675);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+
+
+
+        runtime.reset();//resets the timer so that the autonomous continually runs through the code.
+
+
+
     }
+
+    private void pEncoderMotorRun(double kP, double target, DcMotor driveMotor) { //nate
+        double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
+        double time;
+        time = runtime.time();
+        while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
+            driveMotor.setPower(kP * error);
+            error = Math.abs(target - driveMotor.getCurrentPosition());
+        }
+
+    }
+
 }

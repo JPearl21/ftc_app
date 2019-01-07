@@ -57,7 +57,6 @@ public class GoldDetector extends DogeCVDetector {
     }
 
 
-    @Override
     public Mat process(Mat input) {
 
         // Copy the input mat to our working mats, then release it for memory
@@ -116,7 +115,6 @@ public class GoldDetector extends DogeCVDetector {
 
     }
 
-    @Override
     public void useDefaults() {
         addScorer(ratioScorer);
 
