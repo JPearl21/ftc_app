@@ -29,6 +29,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.disnodeteam.dogecv.CameraViewDisplay;
+import com.disnodeteam.dogecv.DogeCV;
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -38,6 +41,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 
 import java.lang.annotation.Target;
 
@@ -63,12 +68,31 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
     DcMotor tl, tr, bl, br, arm,lift;
     private CRServo intake1, intake2, intake3, intake4;
     private TouchSensor t;
+    private GoldAlignDetector detector;
+    private OpenGLMatrix lastLocation = null;
+    private ElapsedTime runtime2 = new ElapsedTime();
 
     public void runOpMode() {
+        new GoldAlignDetector();
         telemetry.addData("Status", "Initialized");
         telemetry.addData("Debbie" ,"Lilly");
         telemetry.update();
 
+        detector = new GoldAlignDetector(); // Create detector
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
+        detector.useDefaults(); // Set detector to use default settings
+        detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+        detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
+        detector.downscale = 0.4; // How much to downscale the input frames
+
+        detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
+        //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
+        detector.maxAreaScorer.weight = 0.005; //
+
+        detector.ratioScorer.weight = 5; //
+        detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
+
+        detector.enable(); // Start the detector!
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
@@ -173,7 +197,14 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         intake4.setPower(0);
         telemetry.addLine("Outtake stopped");
 
-        //runtime.reset();//resets the timer so that the autonomous continually runs through the code.
+        if(detector.getAligned()){
+            telemetry.addLine("Aligned");
+        }
+        else{
+            telemetry.addLine("Not Aligned");
+        }
+
+        runtime.reset();
 
 
     }
