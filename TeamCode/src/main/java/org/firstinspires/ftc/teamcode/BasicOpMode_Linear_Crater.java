@@ -62,7 +62,6 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
      DcMotor tl, tr, bl, br, arm,lift;
     private CRServo intake1, intake2, intake3, intake4;
-    private TouchSensor t;
 
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -83,11 +82,20 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         intake2 = hardwareMap.crservo.get("intake2");
         intake3 = hardwareMap.crservo.get("intake3");
         intake4 = hardwareMap.crservo.get("intake4");
-        t= hardwareMap.touchSensor.get("t");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        tr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        tl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        tr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        tl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -104,34 +112,26 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
         lift.setPower(0);
 
-
-        tr.setPower(0);
-        tl.setPower(0.5);
-        br.setPower(0.5);
-        bl.setPower(0);
-        sleep(250);
-        tr.setPower(0);
+        pEncoderMotorRun(0.0018, 1120, tl);
+        pEncoderMotorRun(0.0018, 1120, br);
         tl.setPower(0);
-        br.setPower(0);
         bl.setPower(0);
 
         sleep(100);
 
-        tr.setPower(-1);
-        tl.setPower(1);
-        br.setPower(-1);
-        bl.setPower(1);
-        sleep(700);
+        pEncoderMotorRun(0.0018, -1120, tr);
+        pEncoderMotorRun(0.0018, 1120, tl);
+        pEncoderMotorRun(0.0018, -1120, br);
+        pEncoderMotorRun(0.0018, 1120, bl);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
         bl.setPower(0);
 
-        tr.setPower(1);
-        tl.setPower(-1);
-        br.setPower(-1);
-        bl.setPower(1);
-        sleep(580);
+        pEncoderMotorRun(0.0018, 1120, tr);
+        pEncoderMotorRun(0.0018, -1120, tl);
+        pEncoderMotorRun(0.0018, -1120, br);
+        pEncoderMotorRun(0.0018, 1120, bl);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
@@ -139,11 +139,10 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
         sleep(1000);
 
-        tr.setPower(-1);
-        tl.setPower(-1);
-        br.setPower(-1);
-        bl.setPower(-1);
-        sleep(675);
+        pEncoderMotorRun(0.0018, -1120, tr);
+        pEncoderMotorRun(0.0018, -1120, tl);
+        pEncoderMotorRun(0.0018, -1120, br);
+        pEncoderMotorRun(0.0018, -1120, bl);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
