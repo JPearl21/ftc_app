@@ -67,7 +67,6 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     DcMotor tl, tr, bl, br, arm,lift;
     private CRServo intake1, intake2, intake3, intake4;
-    private TouchSensor t;
     private GoldAlignDetector detector;
     private OpenGLMatrix lastLocation = null;
     private ElapsedTime runtime2 = new ElapsedTime();
@@ -107,7 +106,6 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         intake2 = hardwareMap.crservo.get("intake2");
         intake3 = hardwareMap.crservo.get("intake3");
         intake4 = hardwareMap.crservo.get("intake4");
-        t= hardwareMap.touchSensor.get("t");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -129,37 +127,26 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
         lift.setPower(0);
 
-        // turn out
-        tr.setPower(0);
-        tl.setPower(0.5);
-        br.setPower(0.5);
-        bl.setPower(0);
-        sleep(250);
-        tr.setPower(0);
+        pEncoderMotorRun(0.0018, 1120, tl);
+        pEncoderMotorRun(0.0018, 1120, br);
         tl.setPower(0);
-        br.setPower(0);
         bl.setPower(0);
 
         sleep(100);
 
-        //strafe out
-        tr.setPower(-1);
-        tl.setPower(1);
-        br.setPower(-1);
-        bl.setPower(1);
-        sleep(500);
+        pEncoderMotorRun(0.0018, -1120, tr);
+        pEncoderMotorRun(0.0018, 1120, tl);
+        pEncoderMotorRun(0.0018, -1120, br);
+        pEncoderMotorRun(0.0018, 1120, bl);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
         bl.setPower(0);
 
-
-        //turns
-        tr.setPower(1);
-        tl.setPower(-1);
-        br.setPower(-1);
-        bl.setPower(1);
-        sleep(580*2);
+        pEncoderMotorRun(0.0018, 1120, tr);
+        pEncoderMotorRun(0.0018, -1120, tl);
+        pEncoderMotorRun(0.0018, -1120, br);
+        pEncoderMotorRun(0.0018, 1120, bl);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
