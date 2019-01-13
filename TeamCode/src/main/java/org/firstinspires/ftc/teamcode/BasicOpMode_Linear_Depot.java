@@ -186,11 +186,16 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
         if(detector.isFound()){
             telemetry.addLine("Aligned");
+            pEncoderMotorRun(0.0018, -1120, tr);
+            pEncoderMotorRun(0.0018,1120, tl);
+            pEncoderMotorRun(0.0018,-1120,br);
+            pEncoderMotorRun(0.0018, 1120, bl);
             tr.setPower(-1);
             tl.setPower(1);
             br.setPower(-1);
             bl.setPower(1);
             sleep(675);
+
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
@@ -223,6 +228,14 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             driveMotor.setPower(kP * error);
             error = Math.abs(target - driveMotor.getCurrentPosition());
         }
+        /*private void pEncoderDrive(double kP, double brtarget, double bltarget, double trtarget, doubletltarget, DcMotor driveMotor) { //nate
+            double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
+            double time;
+            time = runtime.time();
+            while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
+                driveMotor.setPower(kP * error);
+                error = Math.abs(target - driveMotor.getCurrentPosition());*/
+           // }
 
     }
 
