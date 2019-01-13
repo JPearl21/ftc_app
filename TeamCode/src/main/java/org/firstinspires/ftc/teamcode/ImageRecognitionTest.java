@@ -60,6 +60,14 @@ public class ImageRecognitionTest extends LinearOpMode {
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        tr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        tr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        tl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        tl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -70,7 +78,11 @@ public class ImageRecognitionTest extends LinearOpMode {
         waitForStart();
 
         if (detector.isFound()) {
-            pEncoderMotorRun(0.001, );
+            EncoderDrive(0.001, 1190, tl, tr, bl, br);
+            tl.setPower(0);
+            tr.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
         } else {
             sleep(1000);
             tl.setPower(1);
@@ -83,7 +95,8 @@ public class ImageRecognitionTest extends LinearOpMode {
             br.setPower(0);
             bl.setPower(0);
             sleep(250);
-        if (detector.isFound()) {
+        }
+      /*  if (detector.isFound()) {
             telemetry.addLine("Found");
             telemetry.update();
             tl.setPower(0.5);
@@ -118,8 +131,7 @@ public class ImageRecognitionTest extends LinearOpMode {
             tr.setPower(0);
             br.setPower(0);
             bl.setPower(0);
-        }
-        }
+        }*/
     }
     private void pEncoderMotorRun(double kP, double target, DcMotor driveMotor) { //nate
         double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
@@ -129,5 +141,41 @@ public class ImageRecognitionTest extends LinearOpMode {
             driveMotor.setPower(kP * error);
             error = Math.abs(target - driveMotor.getCurrentPosition());
         }
+    }
+    private void EncoderDrive(double kP, double target, DcMotor driveMotor, DcMotor driveMotor2, DcMotor driveMotor3, DcMotor driveMotor4) { //nate
+        double error = Math.abs(target - driveMotor4.getCurrentPosition());//obtains the robot's position
+       // double error2 = Math.abs(target - driveMotor2.getCurrentPosition());//obtains the robot's position
+        //double error3 = Math.abs(target - driveMotor3.getCurrentPosition());//obtains the robot's position
+        //double error4 = Math.abs(target - driveMotor4.getCurrentPosition());//obtains the robot's position
+        double time;
+        time = runtime.time();
+        while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
+            driveMotor.setPower(kP * error);
+            driveMotor2.setPower(kP * -error);
+            driveMotor3.setPower(kP * -error);
+            driveMotor4.setPower(kP * error);
+            error = Math.abs(target - driveMotor.getCurrentPosition());
+            telemetry.addData("error = ", error);
+        }
+        driveMotor4.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
+            driveMotor.setPower(kP * error);
+            driveMotor2.setPower(kP * error);
+            driveMotor3.setPower(kP * error);
+            driveMotor4.setPower(kP * error);
+            error = Math.abs(target - driveMotor4.getCurrentPosition());
+        }
+      /*  while (error2 > 1 && opModeIsActive()) {//allows the robot to continually operate
+            driveMotor2.setPower(kP * error);
+            error = Math.abs(target - driveMotor2.getCurrentPosition());
+        }
+        while (error3 > 1 && opModeIsActive()) {//allows the robot to continually operate
+            driveMotor3.setPower(kP * error);
+            error = Math.abs(target - driveMotor3.getCurrentPosition());
+        }
+        while (error4 > 1 && opModeIsActive()) {//allows the robot to continually operate
+            driveMotor4.setPower(kP * error);
+            error = Math.abs(target - driveMotor4.getCurrentPosition());
+        }*/
     }
 }
