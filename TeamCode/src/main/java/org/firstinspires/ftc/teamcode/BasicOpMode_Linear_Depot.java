@@ -227,7 +227,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
             driveMotor.setPower(kP * error);
             error = Math.abs(target - driveMotor.getCurrentPosition());
-        }
+    }
         /*private void pEncoderDrive(double kP, double brtarget, double bltarget, double trtarget, doubletltarget, DcMotor driveMotor) { //nate
             double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
             double time;
