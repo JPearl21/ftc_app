@@ -26,52 +26,69 @@ public class EncoderTest extends LinearOpMode {
         br = hardwareMap.dcMotor.get("bottom_right_wheel");
         lift = hardwareMap.dcMotor.get("lift");
 
-        tl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        tr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        tl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        tr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        tl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        tr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.clear();
 
         waitForStart();
 
         while(opModeIsActive()){
-            tl.setTargetPosition(100);
-            tr.setTargetPosition(100);
-            bl.setTargetPosition(100);
-            br.setTargetPosition(100);
-
-            tl.setPower(0.5);
-            tr.setPower(-0.5);
-            bl.setPower(-0.5);
-            br.setPower(0.5);
-
-
-            tl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            tr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            telemetry.addData("tl", tl.getCurrentPosition());
-            telemetry.addData("tr", tr.getCurrentPosition());
-            telemetry.addData("bl", bl.getCurrentPosition());
-            telemetry.addData("br", br.getCurrentPosition());
-            telemetry.update();
-
-            tl.setPower(0);
-            tr.setPower(0);
-            bl.setPower(0);
-            br.setPower(0);
-
-
+            // drive one rotation forward
+            double posCache = 0;
+            posCache = tl.getCurrentPosition();
+            /*while (posCache + 1120 > tl.getCurrentPosition()) {
+                reboundMecanumDrive(0, 1, 0);
+            }*/
+            pReboundYDrive(0.04, 1120, tl);
+            sleep(2000);
+            pReboundXDrive(0.04, 1120*Math.sqrt(2), tl); // compensating for vectors
+            sleep(2000);
+            pReboundTurn(0.04, 1120, tl);
         }
+    }
 
+    private void pReboundXDrive(double kP, double target, DcMotor driveMotor) { //nate
+        double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
+        while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
+            reboundMecanumDrive(-kP*error, 0, 0);
+            error = Math.abs(target - driveMotor.getCurrentPosition());
+            telemetry.addLine(String.valueOf(error));
+        }
+        driveMotor.setPower(0);
+    }
+    private void pReboundYDrive(double kP, double target, DcMotor driveMotor) { //nate
+        double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
+        while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
+            reboundMecanumDrive(0, kP*error,0);
+            error = Math.abs(target - driveMotor.getCurrentPosition());
+            telemetry.addLine(String.valueOf(error));
+        }
+        driveMotor.setPower(0);
+    }
+    private void pReboundTurn(double kP, double target, DcMotor driveMotor) { //nate
+        double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
+        while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
+            reboundMecanumDrive(0, 0, kP*error);
+            error = Math.abs(target - driveMotor.getCurrentPosition());
+            telemetry.addLine(String.valueOf(error));
+        }
+        driveMotor.setPower(0);
+    }
+
+    public void reboundMecanumDrive(double vtX, double vtY, double vR) {
+        // vtX is strafe, vtY is forward and backward, vR is turning
+        // calculate motor powers
+        double tlPower = vtY + vtX - vR;
+        double trPower = vtY - vtX + vR;
+        double blPower = -(vtY) - vtX - vR;
+        double brPower = -(vtY) + vtX + vR;
+        // set motor powers
+        tl.setPower(-tlPower);
+        tr.setPower(-trPower);
+        bl.setPower(blPower);
+        br.setPower(brPower);
     }
 }
