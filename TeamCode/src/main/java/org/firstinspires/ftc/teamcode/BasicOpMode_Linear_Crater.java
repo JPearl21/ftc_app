@@ -84,6 +84,8 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         intake4 = hardwareMap.crservo.get("intake4");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         tr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         tl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -108,7 +110,87 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        // lowers lift
         pEncoderMotorRun(0.0018,2423, lift);
+
+        lift.setPower(0);
+
+        // turn out
+        tr.setPower(0);
+        tl.setPower(0.5);
+        br.setPower(0.5);
+        bl.setPower(0);
+        sleep(150);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        sleep(100);
+
+        //strafe out
+        tr.setPower(-1);
+        tl.setPower(1);
+        br.setPower(-1);
+        bl.setPower(1);
+        sleep(500);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+
+        //turns
+        tr.setPower(1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(1);
+        sleep(1250);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        sleep(1000);
+
+
+
+       /* //moves forward
+        tr.setPower(-1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(-1);
+        sleep(675);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        telemetry.addLine("Last known working, pre-delay");
+
+        sleep(750);
+
+        telemetry.addLine("Last known working, post-delay");*/
+
+        //outtake
+        intake1.setPower(1);
+        intake2.setPower(-1);
+        intake3.setPower(1);
+        intake4.setPower(-1);
+        telemetry.addLine("Outtake run");
+        sleep(5500);
+        intake1.setPower(0);
+        intake2.setPower(0);
+        intake3.setPower(0);
+        intake4.setPower(0);
+        telemetry.addLine("Outtake stopped");
+
+        //pArmToLanderFromRest(0.0018, -4080, arm);
+        //arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+
+        /*pEncoderMotorRun(0.0018,2423, lift);
 
         lift.setPower(0);
 
@@ -146,7 +228,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
-        bl.setPower(0);
+        bl.setPower(0);*/
 
 
 
@@ -167,5 +249,16 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         }
 
     }
+    private void pArmToLanderFromRest(double kP, double target, DcMotor driveMotor) {
+        double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the arm's position
+        while (error > 1) {//allows the robot to continually operate
+            driveMotor.setPower(kP * -error);//-power bacause motor is going backwards toward ground
+            error = Math.abs(target - driveMotor.getCurrentPosition());
+        }
+        arm.setPower(0);
+        telemetry.addData("value:", arm.getCurrentPosition());
+    }
+
+
 
 }
