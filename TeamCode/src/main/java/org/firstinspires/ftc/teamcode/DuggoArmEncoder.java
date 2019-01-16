@@ -77,12 +77,8 @@ public class DuggoArmEncoder extends OpMode{//cool bearl real cool
         if(gamepad2.dpad_up){arm.setPower(-1);}
         if(gamepad2.dpad_down){arm.setPower(1);}
         if(gamepad2.x){
-           // if (arm.getCurrentPosition() > -3060){
-             //   pArmToLanderFromRest(0.0018, -3060, arm);
-               // telemetry.addData("value:", arm.getCurrentPosition());
-           // }
-            if (arm.getCurrentPosition() < -3060){
-                pArmToLanderFromGround(0.0018, -3060, arm);
+            if (arm.getCurrentPosition() < 0){
+                pArmToLanderFromGround(0.0018, 0, arm);
             }
         } //automatically brings arm up un lander position
 
