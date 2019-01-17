@@ -73,8 +73,6 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
     public void runOpMode() {
 
-
-        new GoldAlignDetector();
         telemetry.addData("Status", "Initialized");
         telemetry.addData("Debbie" ,"Lilly");
         telemetry.update();
@@ -126,7 +124,12 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        pEncoderMotorRun(0.0018,2423, lift);
+        pEncoderMotorRun(0.0018,2390, lift);
+
+        if(runtime.time() >2.5 && lift.isBusy()){
+            lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            lift.setPower(0);
+        }
 
         lift.setPower(0);
 
@@ -209,7 +212,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             tl.setPower(-1);
             br.setPower(-0.8);
             bl.setPower(-1);
-            sleep(1000);
+            sleep(1100);
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
@@ -219,7 +222,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             tl.setPower(1);
             br.setPower(1);
             bl.setPower(-1);
-            sleep(500);
+            sleep(385);
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
@@ -229,13 +232,123 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             intake2.setPower(-1);
             intake3.setPower(1);
             intake4.setPower(-1);
-            telemetry.addLine("Outtake run");
             sleep(5500);
             intake1.setPower(0);
             intake2.setPower(0);
             intake3.setPower(0);
             intake4.setPower(0);
 
+
+        } else{
+            sleep(750);
+
+            tr.setPower(1);
+            tl.setPower(1);
+            br.setPower(1);
+            bl.setPower(1);
+            sleep(150);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            sleep(250);
+
+            if(detector.isFound()){
+                tr.setPower(-1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(500);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                tr.setPower(-1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(-1);
+                sleep(1000);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                intake1.setPower(1);
+                intake2.setPower(-1);
+                intake3.setPower(1);
+                intake4.setPower(-1);
+                sleep(5500);
+                intake1.setPower(0);
+                intake2.setPower(0);
+                intake3.setPower(0);
+                intake4.setPower(0);
+
+
+
+            } else {
+
+                sleep(550);
+
+
+                tr.setPower(1);
+                tl.setPower(-1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(150);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+
+                tr.setPower(1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(1);
+                sleep(150);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+
+                tr.setPower(-1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(550);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+
+
+                tr.setPower(-1);
+                tl.setPower(-0.2);
+                br.setPower(-1);
+                bl.setPower(-0.2);
+                sleep(2500);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                intake1.setPower(1);
+                intake2.setPower(-1);
+                intake3.setPower(1);
+                intake4.setPower(-1);
+                sleep(5500);
+                intake1.setPower(0);
+                intake2.setPower(0);
+                intake3.setPower(0);
+                intake4.setPower(0);
+            }
 
         }
 
@@ -346,10 +459,12 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
         double time;
         time = runtime.time();
+
         while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
             driveMotor.setPower(kP * error);
             error = Math.abs(target - driveMotor.getCurrentPosition());
-    }
+        }
+
 
         /*private void pEncoderDrive(double kP, double brtarget, double bltarget, double trtarget, doubletltarget, DcMotor driveMotor) { //nate
             double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
