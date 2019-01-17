@@ -308,7 +308,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
                 tl.setPower(1);
                 br.setPower(1);
                 bl.setPower(1);
-                sleep(150);
+                sleep(125);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
