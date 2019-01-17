@@ -29,6 +29,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.disnodeteam.dogecv.CameraViewDisplay;
+import com.disnodeteam.dogecv.DogeCV;
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -62,6 +65,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
      DcMotor tl, tr, bl, br, arm,lift;
     private CRServo intake1, intake2, intake3, intake4;
+    private GoldAlignDetector detector;
 
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -107,15 +111,38 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         br.setDirection(DcMotor.Direction.FORWARD);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        telemetry.addData("Status", "Initialized");
+        telemetry.addData("Debbie" ,"Lilly");
+        telemetry.update();
+
+        detector = new GoldAlignDetector(); // Create detector
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
+        detector.useDefaults(); // Set detector to use default settings
+        detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+        detector.alignPosOffset = 310; // How far from center frame to offset this alignment zone.
+        detector.downscale = 0.4; // How much to downscale the input frames
+
+        detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
+        //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
+        detector.maxAreaScorer.weight = 0.005; //
+
+        detector.ratioScorer.weight = 5; //
+        detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
+
+        detector.enable(); // Start the detector!
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
         // lowers lift
         pEncoderMotorRun(0.0018,2423, lift);
 
-        lift.setPower(0);
+        if(runtime.time() >2.5 && lift.isBusy()){
+            lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            lift.setPower(0);
+        }
 
-        // turn out
+        //turn
         tr.setPower(0);
         tl.setPower(0.5);
         br.setPower(0.5);
@@ -151,7 +178,146 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         br.setPower(0);
         bl.setPower(0);
 
+        tr.setPower(-1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(-1);
+        sleep(150);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
         sleep(1000);
+
+        if(detector.isFound()){
+            telemetry.addLine("FOUND");
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(1);
+            bl.setPower(-1);
+            sleep(500);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+
+            sleep(750);
+
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(-1);
+            bl.setPower(1);
+            sleep(100);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            tr.setPower(-1);
+            tl.setPower(-1);
+            br.setPower(-1);
+            bl.setPower(-1);
+            sleep(3000);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+
+
+        } else {
+            sleep(750);
+
+            tr.setPower(1);
+            tl.setPower(1);
+            br.setPower(1);
+            bl.setPower(1);
+            sleep(150);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            sleep(250);
+
+            if (detector.isFound()) {
+                tr.setPower(-1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(500);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                tr.setPower(-1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(-1);
+                sleep(3000);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+
+            } else {
+
+                sleep(550);
+
+
+                tr.setPower(1);
+                tl.setPower(-1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(150);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+
+                tr.setPower(1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(1);
+                sleep(150);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+
+                tr.setPower(-1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(550);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+
+
+                tr.setPower(-1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(-1);
+                sleep(3000);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+            }
+        }
+        lift.setPower(0);
 
 
 
@@ -173,17 +339,6 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         telemetry.addLine("Last known working, post-delay");*/
 
         //outtake
-        intake1.setPower(1);
-        intake2.setPower(-1);
-        intake3.setPower(1);
-        intake4.setPower(-1);
-        telemetry.addLine("Outtake run");
-        sleep(5500);
-        intake1.setPower(0);
-        intake2.setPower(0);
-        intake3.setPower(0);
-        intake4.setPower(0);
-        telemetry.addLine("Outtake stopped");
 
         //pArmToLanderFromRest(0.0018, -4080, arm);
         //arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
