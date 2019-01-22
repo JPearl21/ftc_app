@@ -135,8 +135,8 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
         //turn
         tr.setPower(0);
-        tl.setPower(0.5);
-        br.setPower(0.5);
+        tl.setPower(1);
+        br.setPower(1);
         bl.setPower(0);
         sleep(150);
         tr.setPower(0);
@@ -202,17 +202,17 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             tl.setPower(1);
             br.setPower(-1);
             bl.setPower(1);
-            sleep(100);
+            sleep(145);
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
             bl.setPower(0);
 
-            tr.setPower(-0.8);
+            tr.setPower(-0.6);
             tl.setPower(-1);
-            br.setPower(-0.8);
+            br.setPower(-0.6);
             bl.setPower(-1);
-            sleep(1100);
+            sleep(1000);
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
@@ -222,7 +222,17 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             tl.setPower(1);
             br.setPower(1);
             bl.setPower(-1);
-            sleep(385);
+            sleep(250);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            tr.setPower(-1);
+            tl.setPower(-1);
+            br.setPower(-1);
+            bl.setPower(-1);
+            sleep(145);
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
@@ -269,7 +279,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
                 tl.setPower(-1);
                 br.setPower(-1);
                 bl.setPower(-1);
-                sleep(1000);
+                sleep(900);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
@@ -291,49 +301,60 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
                 sleep(550);
 
-
+                    //First Strafe
                 tr.setPower(1);
                 tl.setPower(-1);
                 br.setPower(1);
                 bl.setPower(-1);
-                sleep(150);
+                sleep(100);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
                 bl.setPower(0);
 
                 sleep(550);
-
+                    //forward
                 tr.setPower(1);
                 tl.setPower(1);
                 br.setPower(1);
                 bl.setPower(1);
-                sleep(125);
+                sleep(137);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
                 bl.setPower(0);
 
                 sleep(550);
-
+                //turn
                 tr.setPower(-1);
                 tl.setPower(1);
                 br.setPower(1);
                 bl.setPower(-1);
-                sleep(550);
+                sleep(345);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
                 bl.setPower(0);
 
                 sleep(550);
-
+                    //backwards
 
                 tr.setPower(-1);
-                tl.setPower(-0.2);
+                tl.setPower(-1);
                 br.setPower(-1);
-                bl.setPower(-0.2);
-                sleep(2500);
+                bl.setPower(-1);
+                sleep(1100);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                //right turn
+                tr.setPower(1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(1);
+                sleep(135);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
