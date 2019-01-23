@@ -29,6 +29,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.disnodeteam.dogecv.CameraViewDisplay;
+import com.disnodeteam.dogecv.DogeCV;
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -62,6 +65,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
      DcMotor tl, tr, bl, br, arm,lift;
     private CRServo intake1, intake2, intake3, intake4;
+    private GoldAlignDetector detector;
 
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -84,6 +88,8 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         intake4 = hardwareMap.crservo.get("intake4");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         tr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         tl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -105,10 +111,241 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         br.setDirection(DcMotor.Direction.FORWARD);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        telemetry.addData("Status", "Initialized");
+        telemetry.addData("Debbie" ,"Lilly");
+        telemetry.update();
+
+        detector = new GoldAlignDetector(); // Create detector
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
+        detector.useDefaults(); // Set detector to use default settings
+        detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+        detector.alignPosOffset = 310; // How far from center frame to offset this alignment zone.
+        detector.downscale = 0.4; // How much to downscale the input frames
+
+        detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
+        //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
+        detector.maxAreaScorer.weight = 0.005; //
+
+        detector.ratioScorer.weight = 5; //
+        detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
+
+        detector.enable(); // Start the detector!
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        // lowers lift
         pEncoderMotorRun(0.0018,2423, lift);
+
+        if(runtime.time() >2.5 && lift.isBusy()){
+            lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            lift.setPower(0);
+        }
+
+        //turn
+        tr.setPower(0);
+        tl.setPower(0.5);
+        br.setPower(0.5);
+        bl.setPower(0);
+        sleep(150);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        sleep(100);
+
+        //strafe out
+        tr.setPower(-1);
+        tl.setPower(1);
+        br.setPower(-1);
+        bl.setPower(1);
+        sleep(500);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+
+        //turns
+        tr.setPower(1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(1);
+        sleep(1250);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        tr.setPower(-1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(-1);
+        sleep(150);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        sleep(1000);
+
+        if(detector.isFound()){
+            telemetry.addLine("FOUND");
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(1);
+            bl.setPower(-1);
+            sleep(500);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+
+            sleep(750);
+
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(-1);
+            bl.setPower(1);
+            sleep(100);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            tr.setPower(-1);
+            tl.setPower(-1);
+            br.setPower(-1);
+            bl.setPower(-1);
+            sleep(3000);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+
+
+        } else {
+            sleep(750);
+
+            tr.setPower(1);
+            tl.setPower(1);
+            br.setPower(1);
+            bl.setPower(1);
+            sleep(150);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            sleep(250);
+
+            if (detector.isFound()) {
+                tr.setPower(-1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(500);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                tr.setPower(-1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(-1);
+                sleep(3000);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+
+            } else {
+
+                sleep(550);
+
+
+                tr.setPower(1);
+                tl.setPower(-1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(150);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+
+                tr.setPower(1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(1);
+                sleep(150);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+
+                tr.setPower(-1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(550);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+
+
+                tr.setPower(-1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(-1);
+                sleep(3000);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+            }
+        }
+        lift.setPower(0);
+
+
+
+       /* //moves forward
+        tr.setPower(-1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(-1);
+        sleep(675);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        telemetry.addLine("Last known working, pre-delay");
+
+        sleep(750);
+
+        telemetry.addLine("Last known working, post-delay");*/
+
+        //outtake
+
+        //pArmToLanderFromRest(0.0018, -4080, arm);
+        //arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+
+        /*pEncoderMotorRun(0.0018,2423, lift);
 
         lift.setPower(0);
 
@@ -146,7 +383,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
-        bl.setPower(0);
+        bl.setPower(0);*/
 
 
 
@@ -167,5 +404,16 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         }
 
     }
+    private void pArmToLanderFromRest(double kP, double target, DcMotor driveMotor) {
+        double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the arm's position
+        while (error > 1) {//allows the robot to continually operate
+            driveMotor.setPower(kP * -error);//-power bacause motor is going backwards toward ground
+            error = Math.abs(target - driveMotor.getCurrentPosition());
+        }
+        arm.setPower(0);
+        telemetry.addData("value:", arm.getCurrentPosition());
+    }
+
+
 
 }

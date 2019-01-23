@@ -181,7 +181,21 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         else{if(gamepad2.left_trigger > 0){lift.setPower(-gamepad2.left_trigger);}
         else{lift.setPower(0);}}
 
+        if(gamepad2.x){
+            if (arm.getCurrentPosition() < 0){
+                pArmToLanderFromGround(0.0018, 0, arm);
+            }
+        } //automatically brings arm up un lander position
+
         telemetry.addLine(String.valueOf(lift.getCurrentPosition()));
 
+    }
+    private void pArmToLanderFromGround(double kP, double target, DcMotor driveMotor) {
+        double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the arm's position
+        while (error > 1) {//allows the robot to continually operate
+            driveMotor.setPower(kP * error);
+            error = Math.abs(target - driveMotor.getCurrentPosition());
+        }
+        arm.setPower(0);
     }
 }

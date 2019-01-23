@@ -72,7 +72,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
     private ElapsedTime runtime2 = new ElapsedTime();
 
     public void runOpMode() {
-        new GoldAlignDetector();
+
         telemetry.addData("Status", "Initialized");
         telemetry.addData("Debbie" ,"Lilly");
         telemetry.update();
@@ -108,6 +108,8 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         intake4 = hardwareMap.crservo.get("intake4");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -122,8 +124,260 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        pEncoderMotorRun(0.0018,2390, lift);
+
+        if(runtime.time() >2.5 && lift.isBusy()){
+            lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            lift.setPower(0);
+        }
+
+        lift.setPower(0);
+
+        //turn
+        tr.setPower(0);
+        tl.setPower(1);
+        br.setPower(1);
+        bl.setPower(0);
+        sleep(150);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        sleep(100);
+
+        //strafe out
+        tr.setPower(-1);
+        tl.setPower(1);
+        br.setPower(-1);
+        bl.setPower(1);
+        sleep(500);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+
+        //turns
+        tr.setPower(1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(1);
+        sleep(1250);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        tr.setPower(-1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(-1);
+        sleep(150);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+
+
+        sleep(1000);
+
+        if(detector.isFound()){
+            telemetry.addLine("FOUND");
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(1);
+            bl.setPower(-1);
+            sleep(500);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+
+            sleep(750);
+
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(-1);
+            bl.setPower(1);
+            sleep(145);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            tr.setPower(-0.6);
+            tl.setPower(-1);
+            br.setPower(-0.6);
+            bl.setPower(-1);
+            sleep(1000);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(1);
+            bl.setPower(-1);
+            sleep(250);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            tr.setPower(-1);
+            tl.setPower(-1);
+            br.setPower(-1);
+            bl.setPower(-1);
+            sleep(145);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            intake1.setPower(1);
+            intake2.setPower(-1);
+            intake3.setPower(1);
+            intake4.setPower(-1);
+            sleep(5500);
+            intake1.setPower(0);
+            intake2.setPower(0);
+            intake3.setPower(0);
+            intake4.setPower(0);
+
+
+        } else{
+            sleep(750);
+
+            tr.setPower(1);
+            tl.setPower(1);
+            br.setPower(1);
+            bl.setPower(1);
+            sleep(150);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            sleep(250);
+
+            if(detector.isFound()){
+                tr.setPower(-1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(500);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                tr.setPower(-1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(-1);
+                sleep(900);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                intake1.setPower(1);
+                intake2.setPower(-1);
+                intake3.setPower(1);
+                intake4.setPower(-1);
+                sleep(5500);
+                intake1.setPower(0);
+                intake2.setPower(0);
+                intake3.setPower(0);
+                intake4.setPower(0);
+
+
+
+            } else {
+
+                sleep(550);
+
+                    //First Strafe
+                tr.setPower(1);
+                tl.setPower(-1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(100);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+                    //forward
+                tr.setPower(1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(1);
+                sleep(137);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+                //turn
+                tr.setPower(-1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(345);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+                    //backwards
+
+                tr.setPower(-1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(-1);
+                sleep(1100);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                //right turn
+                tr.setPower(1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(1);
+                sleep(135);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                intake1.setPower(1);
+                intake2.setPower(-1);
+                intake3.setPower(1);
+                intake4.setPower(-1);
+                sleep(5500);
+                intake1.setPower(0);
+                intake2.setPower(0);
+                intake3.setPower(0);
+                intake4.setPower(0);
+            }
+
+        }
+
+
+
+
         // lowers lift
-        pEncoderMotorRun(0.0018,2423, lift);
+        /*pEncoderMotorRun(0.0018,2423, lift);
 
         lift.setPower(0);
 
@@ -184,13 +438,18 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         intake4.setPower(0);
         telemetry.addLine("Outtake stopped"); */
 
-        if(detector.isFound()){
-            telemetry.addLine("Aligned");
+        /*if(detector.isFound()){
+            telemetry.addLine("Found");
+            pEncoderMotorRun(0.0018, -1120, tr);
+            pEncoderMotorRun(0.0018,1120, tl);
+            pEncoderMotorRun(0.0018,-1120,br);
+            pEncoderMotorRun(0.0018, 1120, bl);
             tr.setPower(-1);
             tl.setPower(1);
             br.setPower(-1);
             bl.setPower(1);
             sleep(675);
+
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
@@ -208,7 +467,9 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             br.setPower(0);
             bl.setPower(0);
 
-        }
+        }*/
+        //pArmToLanderFromRest(0.0018, -4080, arm);
+        //arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         runtime.reset();
 
@@ -219,12 +480,33 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
         double time;
         time = runtime.time();
+
         while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
             driveMotor.setPower(kP * error);
             error = Math.abs(target - driveMotor.getCurrentPosition());
         }
 
+
+        /*private void pEncoderDrive(double kP, double brtarget, double bltarget, double trtarget, doubletltarget, DcMotor driveMotor) { //nate
+            double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
+            double time;
+            time = runtime.time();
+            while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
+                driveMotor.setPower(kP * error);
+                error = Math.abs(target - driveMotor.getCurrentPosition());*/
+           // }
+
     }
+    private void pArmToLanderFromRest(double kP, double target, DcMotor driveMotor) {
+        double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the arm's position
+        while (error > 1) {//allows the robot to continually operate
+            driveMotor.setPower(kP * -error);//-power bacause motor is going backwards toward ground
+            error = Math.abs(target - driveMotor.getCurrentPosition());
+        }
+        arm.setPower(0);
+        telemetry.addData("value:", arm.getCurrentPosition());
+    }
+
 
 }
 
