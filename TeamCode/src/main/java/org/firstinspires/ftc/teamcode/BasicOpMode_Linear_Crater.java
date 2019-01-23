@@ -63,7 +63,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-     DcMotor tl, tr, bl, br, arm,lift;
+     DcMotor tl, tr, bl, br, arm,lift, n1;
     private CRServo intake1, intake2, intake3, intake4;
     private GoldAlignDetector detector;
 
@@ -110,6 +110,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         bl.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.FORWARD);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
+        n1 = hardwareMap.dcMotor.get("n1");
 
         telemetry.addData("Status", "Initialized");
         telemetry.addData("Debbie" ,"Lilly");
@@ -134,6 +135,8 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        n1.setPower(-1+Math.random()*2);
+
         // lowers lift
         pEncoderMotorRun(0.0018,2423, lift);
 
@@ -142,10 +145,12 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
             lift.setPower(0);
         }
 
-        //turn
+        lift.setPower(0);
+
+//turn
         tr.setPower(0);
-        tl.setPower(0.5);
-        br.setPower(0.5);
+        tl.setPower(1);
+        br.setPower(1);
         bl.setPower(0);
         sleep(150);
         tr.setPower(0);
@@ -188,6 +193,8 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
         br.setPower(0);
         bl.setPower(0);
 
+
+
         sleep(1000);
 
         if(detector.isFound()){
@@ -209,25 +216,44 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
             tl.setPower(1);
             br.setPower(-1);
             bl.setPower(1);
-            sleep(100);
+            sleep(145);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            tr.setPower(-0.6);
+            tl.setPower(-1);
+            br.setPower(-0.6);
+            bl.setPower(-1);
+            sleep(1000);
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
             bl.setPower(0);
 
             tr.setPower(-1);
-            tl.setPower(-1);
-            br.setPower(-1);
+            tl.setPower(1);
+            br.setPower(1);
             bl.setPower(-1);
-            sleep(3000);
+            sleep(250);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            tr.setPower(-0.5);
+            tl.setPower(-0.5);
+            br.setPower(-0.5);
+            bl.setPower(-0.5);
+            sleep(300);
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
             bl.setPower(0);
 
 
-
-        } else {
+        } else{
             sleep(750);
 
             tr.setPower(1);
@@ -242,7 +268,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
             sleep(250);
 
-            if (detector.isFound()) {
+            if(detector.isFound()){
                 tr.setPower(-1);
                 tl.setPower(1);
                 br.setPower(1);
@@ -257,64 +283,78 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
                 tl.setPower(-1);
                 br.setPower(-1);
                 bl.setPower(-1);
-                sleep(3000);
+                sleep(900);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
                 bl.setPower(0);
+
+
 
 
             } else {
 
                 sleep(550);
 
-
+                //First Strafe
                 tr.setPower(1);
                 tl.setPower(-1);
                 br.setPower(1);
                 bl.setPower(-1);
-                sleep(150);
+                sleep(100);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
                 bl.setPower(0);
 
                 sleep(550);
-
+                //forward
                 tr.setPower(1);
                 tl.setPower(1);
                 br.setPower(1);
                 bl.setPower(1);
-                sleep(150);
+                sleep(137);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
                 bl.setPower(0);
 
                 sleep(550);
-
+                //turn
                 tr.setPower(-1);
                 tl.setPower(1);
                 br.setPower(1);
                 bl.setPower(-1);
-                sleep(550);
+                sleep(345);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
                 bl.setPower(0);
 
                 sleep(550);
-
+                //backwards
 
                 tr.setPower(-1);
                 tl.setPower(-1);
                 br.setPower(-1);
                 bl.setPower(-1);
-                sleep(3000);
+                sleep(1100);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
                 bl.setPower(0);
+
+                //right turn
+                tr.setPower(1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(1);
+                sleep(135);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
             }
         }
         lift.setPower(0);
@@ -389,10 +429,11 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
 
         runtime.reset();//resets the timer so that the autonomous continually runs through the code.
-
+        stop();
 
 
     }
+
 
     private void pEncoderMotorRun(double kP, double target, DcMotor driveMotor) { //nate
         double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
