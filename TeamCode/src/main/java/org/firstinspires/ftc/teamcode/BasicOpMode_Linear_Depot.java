@@ -65,7 +65,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    DcMotor tl, tr, bl, br, arm,lift;
+    DcMotor tl, tr, bl, br, arm,lift, n1;
     private CRServo intake1, intake2, intake3, intake4;
     private GoldAlignDetector detector;
     private OpenGLMatrix lastLocation = null;
@@ -106,6 +106,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         intake2 = hardwareMap.crservo.get("intake2");
         intake3 = hardwareMap.crservo.get("intake3");
         intake4 = hardwareMap.crservo.get("intake4");
+        n1 = hardwareMap.dcMotor.get("n1");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -123,6 +124,8 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+
+        n1.setPower(-1+Math.random()*2);
 
         pEncoderMotorRun(0.0018,2390, lift);
 
@@ -183,7 +186,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
         sleep(1000);
 
-        if(detector.isFound()){
+        if(detector.isFound()){ //left position
             telemetry.addLine("FOUND");
             tr.setPower(-1);
             tl.setPower(1);
@@ -264,7 +267,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
             sleep(250);
 
-            if(detector.isFound()){
+            if(detector.isFound()){ //middle position
                 tr.setPower(-1);
                 tl.setPower(1);
                 br.setPower(1);
@@ -297,7 +300,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
 
 
-            } else {
+            } else { //right position
 
                 sleep(550);
 
@@ -372,6 +375,8 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             }
 
         }
+
+
 
 
 
