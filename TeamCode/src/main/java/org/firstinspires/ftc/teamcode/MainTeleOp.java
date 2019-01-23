@@ -20,7 +20,7 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
     */
 
     // Top left, top right, bottom left, bottom right, arm motors
-    private DcMotor tl, tr, bl, br, arm, lift;
+    private DcMotor tl, tr, bl, br, arm, lift, n1;
     private CRServo intake1, intake2, intake3, intake4; //1 is tr, 2 is tl, 3 is br, 4 is bl
     private float   leftPower, rightPower, xValue, yValue;
 
@@ -38,6 +38,7 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         bl = hardwareMap.dcMotor.get("bottom_left_wheel");
         br = hardwareMap.dcMotor.get("bottom_right_wheel");
         arm = hardwareMap.dcMotor.get("arm");
+        n1 = hardwareMap.dcMotor.get("n1");
         intake1 = hardwareMap.crservo.get("intake1");
         intake2 = hardwareMap.crservo.get("intake2");
         intake3 = hardwareMap.crservo.get("intake3");
@@ -115,8 +116,9 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
     public void loop(){
         // Check if buttons are being pressed and run motors
 
+        reboundMecanumDrive(-(gamepad1.left_stick_x), gamepad1.left_stick_y, gamepad1.right_stick_x); //left right, forwards backwards, turning
 
-        yValue = gamepad1.left_stick_y;
+        /*yValue = gamepad1.left_stick_y;
         xValue = gamepad1.left_stick_x;
 
         tl.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -129,7 +131,7 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
             tl.setPower(Range.clip(leftPower, -0.75, 0.75));
             bl.setPower(Range.clip(leftPower, -0.75, 0.75));
             tr.setPower(Range.clip(rightPower, -0.75, 0.75));
-            br.setPower(Range.clip(rightPower, -0.75, 0.75));
+            br.setPower(Range.clip(rightPower, -0.75, 0.75));*/
 
 
 
@@ -197,5 +199,17 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
             error = Math.abs(target - driveMotor.getCurrentPosition());
         }
         arm.setPower(0);
+    }
+    public void reboundMecanumDrive(double vtX, double vtY, double vR) {
+        // calculate motor powers
+        double tlPower = vtY + vtX - vR;
+        double trPower = vtY - vtX + vR;
+        double blPower = -(vtY) - vtX - vR;
+        double brPower = -(vtY) + vtX + vR;
+        // set motor powers
+        tl.setPower(-tlPower);
+        tr.setPower(-trPower);
+        bl.setPower(blPower);
+        br.setPower(brPower);
     }
 }
