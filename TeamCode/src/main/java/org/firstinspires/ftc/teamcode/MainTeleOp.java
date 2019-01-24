@@ -190,6 +190,10 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         } //automatically brings arm up un lander position
 
         telemetry.addLine(String.valueOf(lift.getCurrentPosition()));
+        
+        if(gamepad1.x){n1.setPower(-1+Math.random()*2);}
+        if(gamepad1.a){n1.setPower(1);}
+        if(gamepad1.b){n1.setPower(-1);}
 
     }
     private void pArmToLanderFromGround(double kP, double target, DcMotor driveMotor) {
