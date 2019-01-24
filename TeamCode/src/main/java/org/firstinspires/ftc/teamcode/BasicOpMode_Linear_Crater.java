@@ -42,6 +42,8 @@ import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+
 import java.lang.annotation.Target;
 
 
@@ -63,54 +65,13 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-     DcMotor tl, tr, bl, br, arm,lift, n1;
+    DcMotor tl, tr, bl, br, arm,lift, n1;
     private CRServo intake1, intake2, intake3, intake4;
     private GoldAlignDetector detector;
+    private OpenGLMatrix lastLocation = null;
+    private ElapsedTime runtime2 = new ElapsedTime();
 
     public void runOpMode() {
-        telemetry.addData("Status", "Initialized");
-        telemetry.addData("Debbie" ,"Lilly");
-        telemetry.update();
-
-
-        // Initialize the hardware variables. Note that the strings used here as parameters
-        // to 'get' must correspond to the names assigned during the robot configuration
-        // step (using the FTC Robot Controller app on the phone).
-        tl = hardwareMap.dcMotor.get("top_left_wheel");
-        tr = hardwareMap.dcMotor.get("top_right_wheel");
-        bl = hardwareMap.dcMotor.get("bottom_left_wheel");
-        br = hardwareMap.dcMotor.get("bottom_right_wheel");
-        arm = hardwareMap.dcMotor.get("arm");
-        lift = hardwareMap.dcMotor.get("lift");
-        intake1 = hardwareMap.crservo.get("intake1");
-        intake2 = hardwareMap.crservo.get("intake2");
-        intake3 = hardwareMap.crservo.get("intake3");
-        intake4 = hardwareMap.crservo.get("intake4");
-
-        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        tr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        tl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        tr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        tl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
-
-        // Most robots need the motor on one side to be reversed to drive forward
-        // Reverse the motor that runs backwards when connected directly to the battery
-        tr.setDirection(DcMotor.Direction.FORWARD);
-        tl.setDirection(DcMotor.Direction.FORWARD);
-        bl.setDirection(DcMotor.Direction.FORWARD);
-        br.setDirection(DcMotor.Direction.FORWARD);
-        lift.setDirection(DcMotorSimple.Direction.REVERSE);
-        n1 = hardwareMap.dcMotor.get("n1");
 
         telemetry.addData("Status", "Initialized");
         telemetry.addData("Debbie" ,"Lilly");
@@ -132,13 +93,41 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
         detector.enable(); // Start the detector!
 
+        // Initialize the hardware variables. Note that the strings used here as parameters
+        // to 'get' must correspond to the names assigned during the robot configuration
+        // step (using the FTC Robot Controller app on the phone).
+        tl = hardwareMap.dcMotor.get("top_left_wheel");
+        tr = hardwareMap.dcMotor.get("top_right_wheel");
+        bl = hardwareMap.dcMotor.get("bottom_left_wheel");
+        br = hardwareMap.dcMotor.get("bottom_right_wheel");
+        arm = hardwareMap.dcMotor.get("arm");
+        lift = hardwareMap.dcMotor.get("lift");
+        intake1 = hardwareMap.crservo.get("intake1");
+        intake2 = hardwareMap.crservo.get("intake2");
+        intake3 = hardwareMap.crservo.get("intake3");
+        intake4 = hardwareMap.crservo.get("intake4");
+        n1 = hardwareMap.dcMotor.get("n1");
+
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Most robots need the motor on one side to be reversed to drive forward
+        // Reverse the motor that runs backwards when connected directly to the battery
+        tr.setDirection(DcMotor.Direction.FORWARD);
+        tl.setDirection(DcMotor.Direction.FORWARD);
+        bl.setDirection(DcMotor.Direction.FORWARD);
+        br.setDirection(DcMotor.Direction.FORWARD);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
         n1.setPower(-1+Math.random()*2);
 
-        // lowers lift
-        pEncoderMotorRun(0.0018,2423, lift);
+        pEncoderMotorRun(0.0018,2390, lift);
 
         if(runtime.time() >2.5 && lift.isBusy()){
             lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -147,7 +136,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
         lift.setPower(0);
 
-//turn
+        //turn
         tr.setPower(0);
         tl.setPower(1);
         br.setPower(1);
@@ -197,7 +186,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
         sleep(1000);
 
-        if(detector.isFound()){
+        if(detector.isFound()){ //left position
             telemetry.addLine("FOUND");
             tr.setPower(-1);
             tl.setPower(1);
@@ -242,15 +231,25 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
             br.setPower(0);
             bl.setPower(0);
 
-            tr.setPower(-0.5);
-            tl.setPower(-0.5);
-            br.setPower(-0.5);
-            bl.setPower(-0.5);
-            sleep(300);
+            tr.setPower(-1);
+            tl.setPower(-1);
+            br.setPower(-1);
+            bl.setPower(-1);
+            sleep(145);
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
             bl.setPower(0);
+
+            intake1.setPower(1);
+            intake2.setPower(-1);
+            intake3.setPower(1);
+            intake4.setPower(-1);
+            sleep(5500);
+            intake1.setPower(0);
+            intake2.setPower(0);
+            intake3.setPower(0);
+            intake4.setPower(0);
 
 
         } else{
@@ -268,7 +267,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
             sleep(250);
 
-            if(detector.isFound()){
+            if(detector.isFound()){ //middle position
                 tr.setPower(-1);
                 tl.setPower(1);
                 br.setPower(1);
@@ -289,10 +288,19 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
                 br.setPower(0);
                 bl.setPower(0);
 
+                intake1.setPower(1);
+                intake2.setPower(-1);
+                intake3.setPower(1);
+                intake4.setPower(-1);
+                sleep(5500);
+                intake1.setPower(0);
+                intake2.setPower(0);
+                intake3.setPower(0);
+                intake4.setPower(0);
 
 
 
-            } else {
+            } else { //right position
 
                 sleep(550);
 
@@ -355,36 +363,25 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
                 br.setPower(0);
                 bl.setPower(0);
 
+                intake1.setPower(1);
+                intake2.setPower(-1);
+                intake3.setPower(1);
+                intake4.setPower(-1);
+                sleep(5500);
+                intake1.setPower(0);
+                intake2.setPower(0);
+                intake3.setPower(0);
+                intake4.setPower(0);
             }
+
         }
-        lift.setPower(0);
 
 
 
-       /* //moves forward
-        tr.setPower(-1);
-        tl.setPower(-1);
-        br.setPower(-1);
-        bl.setPower(-1);
-        sleep(675);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
-
-        telemetry.addLine("Last known working, pre-delay");
-
-        sleep(750);
-
-        telemetry.addLine("Last known working, post-delay");*/
-
-        //outtake
-
-        //pArmToLanderFromRest(0.0018, -4080, arm);
-        //arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
 
+        // lowers lift
         /*pEncoderMotorRun(0.0018,2423, lift);
 
         lift.setPower(0);
@@ -416,33 +413,93 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
         sleep(1000);
 
-        pEncoderMotorRun(0.0018, -1120, tr);
-        pEncoderMotorRun(0.0018, -1120, tl);
-        pEncoderMotorRun(0.0018, -1120, br);
-        pEncoderMotorRun(0.0018, -1120, bl);
+        //moves forward
+       /* tr.setPower(-1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(-1);
+        sleep(675);
         tr.setPower(0);
         tl.setPower(0);
         br.setPower(0);
-        bl.setPower(0);*/
+        bl.setPower(0);
 
+        telemetry.addLine("Last known working, pre-delay");
 
+        sleep(750);
 
+        telemetry.addLine("Last known working, post-delay");
 
-        runtime.reset();//resets the timer so that the autonomous continually runs through the code.
-        stop();
+        //outtake
+        intake1.setPower(1);
+        intake2.setPower(-1);
+        intake3.setPower(1);
+        intake4.setPower(-1);
+        telemetry.addLine("Outtake run");
+        sleep(5500);
+        intake1.setPower(0);
+        intake2.setPower(0);
+        intake3.setPower(0);
+        intake4.setPower(0);
+        telemetry.addLine("Outtake stopped"); */
+
+        /*if(detector.isFound()){
+            telemetry.addLine("Found");
+            pEncoderMotorRun(0.0018, -1120, tr);
+            pEncoderMotorRun(0.0018,1120, tl);
+            pEncoderMotorRun(0.0018,-1120,br);
+            pEncoderMotorRun(0.0018, 1120, bl);
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(-1);
+            bl.setPower(1);
+            sleep(675);
+
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+        }
+        else{
+            telemetry.addLine("Not Aligned");
+            tr.setPower(-0.4);
+            tl.setPower(-0.4);
+            br.setPower(-0.4);
+            bl.setPower(-0.4);
+            sleep(800);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+        }*/
+        //pArmToLanderFromRest(0.0018, -4080, arm);
+        //arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        runtime.reset();
 
 
     }
-
 
     private void pEncoderMotorRun(double kP, double target, DcMotor driveMotor) { //nate
         double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
         double time;
         time = runtime.time();
+
         while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
             driveMotor.setPower(kP * error);
             error = Math.abs(target - driveMotor.getCurrentPosition());
         }
+
+
+        /*private void pEncoderDrive(double kP, double brtarget, double bltarget, double trtarget, doubletltarget, DcMotor driveMotor) { //nate
+            double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
+            double time;
+            time = runtime.time();
+            while (error > 1 && opModeIsActive()) {//allows the robot to continually operate
+                driveMotor.setPower(kP * error);
+                error = Math.abs(target - driveMotor.getCurrentPosition());*/
+        // }
 
     }
     private void pArmToLanderFromRest(double kP, double target, DcMotor driveMotor) {
@@ -456,5 +513,8 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
     }
 
 
-
 }
+
+
+
+
