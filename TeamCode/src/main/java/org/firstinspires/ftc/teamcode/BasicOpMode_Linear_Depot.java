@@ -505,7 +505,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
     private void pArmToLanderFromRest(double kP, double target, DcMotor driveMotor) {
         double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the arm's position
         while (error > 1) {//allows the robot to continually operate
-            driveMotor.setPower(kP * -error);//-power bacause motor is going backwards toward ground
+            driveMotor.setPower(kP * -error);//-power because motor is going backwards toward ground
             error = Math.abs(target - driveMotor.getCurrentPosition());
         }
         arm.setPower(0);
