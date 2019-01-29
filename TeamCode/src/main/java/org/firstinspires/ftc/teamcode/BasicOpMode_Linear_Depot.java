@@ -212,9 +212,9 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             bl.setPower(0);
 
             tr.setPower(-0.6);
-            tl.setPower(-1);
+            tl.setPower(-0.6);
             br.setPower(-0.6);
-            bl.setPower(-1);
+            bl.setPower(-0.6);
             sleep(1000);
             tr.setPower(0);
             tl.setPower(0);
@@ -231,10 +231,10 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             br.setPower(0);
             bl.setPower(0);
 
-            tr.setPower(-1);
-            tl.setPower(-1);
-            br.setPower(-1);
-            bl.setPower(-1);
+            tr.setPower(-0.5);
+            tl.setPower(-0.5);
+            br.setPower(-0.5);
+            bl.setPower(-0.5);
             sleep(145);
             tr.setPower(0);
             tl.setPower(0);
@@ -251,6 +251,75 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             intake3.setPower(0);
             intake4.setPower(0);
 
+            sleep(250);
+
+            tr.setPower(-0.5);
+            tl.setPower(-0.5);
+            br.setPower(-0.5);
+            bl.setPower(-0.5);
+            sleep(300);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            sleep(250);
+
+            tr.setPower(0.5);
+            tl.setPower(0.5);
+            br.setPower(0.5);
+            bl.setPower(0.5);
+            sleep(300);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            sleep(250);
+
+            tr.setPower(1);
+            tl.setPower(-1);
+            br.setPower(-1);
+            bl.setPower(1);
+            sleep(575);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            sleep(250);
+
+            tr.setPower(1);
+            tl.setPower(1);
+            br.setPower(1);
+            bl.setPower(1);
+            sleep(100);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            tr.setPower(1);
+            tl.setPower(-1);
+            br.setPower(1);
+            bl.setPower(-1);
+            sleep(750);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            sleep(250);
+
+            tr.setPower(1);
+            tl.setPower(1);
+            br.setPower(1);
+            bl.setPower(1);
+            sleep(2000);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
 
         } else{
             sleep(750);
@@ -265,7 +334,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             br.setPower(0);
             bl.setPower(0);
 
-            sleep(250);
+            sleep(1000);
 
             if(detector.isFound()){ //middle position
                 tr.setPower(-1);
@@ -298,6 +367,42 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
                 intake3.setPower(0);
                 intake4.setPower(0);
 
+                sleep(500);
+
+                tr.setPower(1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(1);
+                sleep(250);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(300);
+
+                tr.setPower(1);
+                tl.setPower(-1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(200);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                tr.setPower(1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(1);
+                sleep(2000);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+
+
 
 
             } else { //right position
@@ -321,7 +426,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
                 tl.setPower(1);
                 br.setPower(1);
                 bl.setPower(1);
-                sleep(137);
+                sleep(275);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
@@ -352,7 +457,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
                 br.setPower(0);
                 bl.setPower(0);
 
-                //right turn
+                //left turn
                 tr.setPower(1);
                 tl.setPower(-1);
                 br.setPower(-1);
@@ -372,6 +477,27 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
                 intake2.setPower(0);
                 intake3.setPower(0);
                 intake4.setPower(0);
+
+
+                tr.setPower(1);
+                tl.setPower(-1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(100);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                tr.setPower(1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(1);
+                sleep(2000);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
             }
 
         }
