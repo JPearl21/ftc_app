@@ -136,6 +136,8 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
         lift.setPower(0);
 
+        sleep(750);
+
         //turn
         tr.setPower(0);
         tl.setPower(1);
@@ -265,7 +267,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
             br.setPower(0);
             bl.setPower(0);
 
-            sleep(250);
+            sleep(1000);
 
             if(detector.isFound()){ //middle position
                 tr.setPower(-1);
@@ -321,7 +323,7 @@ public class BasicOpMode_Linear_Crater extends LinearOpMode {
                 tl.setPower(1);
                 br.setPower(1);
                 bl.setPower(1);
-                sleep(137);
+                sleep(275);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
