@@ -19,7 +19,7 @@ public class IlanMotorTest extends OpMode{
     @Override
     public void init() {
         motorList = hardwareMap.getAll(DcMotor.class);
-        currentNumber = 0
+        currentNumber = 0;
     }
 
     @Override
