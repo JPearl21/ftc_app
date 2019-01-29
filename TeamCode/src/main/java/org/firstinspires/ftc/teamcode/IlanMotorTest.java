@@ -30,12 +30,12 @@ public class IlanMotorTest extends OpMode{
         telemetry.addData("Prev: ", motorList.get(Math.abs(currentNumber) % motorList.size()+1).getDeviceName());
 
         currentMotor.setPower(gamepad1.left_stick_y);
-        if(gamepad1.right_stick_x > 1 || gamepad1.right_stick_y > 1) {
+        if(gamepad1.right_stick_x == 1 || gamepad1.right_stick_y == 1) {
             currentMotor.setPower(0);
             currentNumber = (currentNumber + 1) % motorList.size();
 
         }
-        if(gamepad1.right_stick_y < 1 || gamepad1.right_stick_x < 1) {
+        if(gamepad1.right_stick_y == -1 || gamepad1.right_stick_x == -1) {
             currentMotor.setPower(0);
             currentNumber = (currentNumber - 1) % motorList.size();
         }
