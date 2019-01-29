@@ -185,9 +185,10 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
 
         sleep(1000);
-
+//left position cube
         if(detector.isFound()){ //left position
             telemetry.addLine("FOUND");
+            //turn right
             tr.setPower(-1);
             tl.setPower(1);
             br.setPower(1);
@@ -200,7 +201,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
 
             sleep(750);
-
+            //strafe right
             tr.setPower(-1);
             tl.setPower(1);
             br.setPower(-1);
@@ -210,7 +211,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             tl.setPower(0);
             br.setPower(0);
             bl.setPower(0);
-
+            //backwards
             tr.setPower(-0.6);
             tl.setPower(-0.6);
             br.setPower(-0.6);
@@ -220,7 +221,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             tl.setPower(0);
             br.setPower(0);
             bl.setPower(0);
-
+            //turn right
             tr.setPower(-1);
             tl.setPower(1);
             br.setPower(1);
@@ -230,7 +231,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             tl.setPower(0);
             br.setPower(0);
             bl.setPower(0);
-
+            //backwards
             tr.setPower(-0.5);
             tl.setPower(-0.5);
             br.setPower(-0.5);
@@ -241,30 +242,55 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             br.setPower(0);
             bl.setPower(0);
 
+            sleep(100);
+            //strafe right
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(-1);
+            bl.setPower(1);
+            sleep(275);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            sleep(100);
             intake1.setPower(1);
             intake2.setPower(-1);
             intake3.setPower(1);
             intake4.setPower(-1);
-            sleep(5500);
+            sleep(5000);
             intake1.setPower(0);
             intake2.setPower(0);
             intake3.setPower(0);
             intake4.setPower(0);
 
-            sleep(250);
-
-            tr.setPower(-0.5);
-            tl.setPower(-0.5);
-            br.setPower(-0.5);
-            bl.setPower(-0.5);
-            sleep(300);
+            sleep(100);
+            //strafe right
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(-1);
+            bl.setPower(1);
+            sleep(150);
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
             bl.setPower(0);
 
             sleep(250);
+            //forwards
+            tr.setPower(1);
+            tl.setPower(1);
+            br.setPower(1);
+            bl.setPower(1);
+            sleep(2000);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
 
+            /*sleep(250);
+            //forwards
             tr.setPower(0.5);
             tl.setPower(0.5);
             br.setPower(0.5);
@@ -276,7 +302,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             bl.setPower(0);
 
             sleep(250);
-
+            //turn left
             tr.setPower(1);
             tl.setPower(-1);
             br.setPower(-1);
@@ -288,7 +314,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             bl.setPower(0);
 
             sleep(250);
-
+            //forwards
             tr.setPower(1);
             tl.setPower(1);
             br.setPower(1);
@@ -299,10 +325,11 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             br.setPower(0);
             bl.setPower(0);
 
-            tr.setPower(1);
-            tl.setPower(-1);
-            br.setPower(1);
-            bl.setPower(-1);
+            //strafe left
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(-1);
+            bl.setPower(1);
             sleep(750);
             tr.setPower(0);
             tl.setPower(0);
@@ -310,7 +337,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             bl.setPower(0);
 
             sleep(250);
-
+            //forward
             tr.setPower(1);
             tl.setPower(1);
             br.setPower(1);
@@ -319,11 +346,11 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
-            bl.setPower(0);
+            bl.setPower(0);*/
 
-        } else{
+        } else{//middle position cube
             sleep(750);
-
+            //forward
             tr.setPower(1);
             tl.setPower(1);
             br.setPower(1);
@@ -336,7 +363,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
             sleep(1000);
 
-            if(detector.isFound()){ //middle position
+            if(detector.isFound()){ //right position
                 tr.setPower(-1);
                 tl.setPower(1);
                 br.setPower(1);
@@ -404,7 +431,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
 
 
-
+                //far right position cube
             } else { //right position
 
                 sleep(550);
@@ -494,6 +521,19 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
                 br.setPower(1);
                 bl.setPower(1);
                 sleep(2000);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(100);
+
+                //strafe left
+                tr.setPower(1);
+                tl.setPower(-1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(150);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
