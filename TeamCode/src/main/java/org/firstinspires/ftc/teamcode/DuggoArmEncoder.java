@@ -74,8 +74,14 @@ public class DuggoArmEncoder extends OpMode{//cool bearl real cool
         power    = Range.clip(-gamepad1.right_stick_y, -0.6, 0.6) ;//change min between -1 and 0, max between 0 and 1 to make slower/faster
         arm.setPower(power);*/
 
-        if(gamepad2.dpad_up){arm.setPower(-1);}
+        if(gamepad2.dpad_up){arm.setPower(-1);
+        telemetry.addLine(String.valueOf(arm.getCurrentPosition()));}
         if(gamepad2.dpad_down){arm.setPower(1);}
+        if(gamepad2.y){
+            if (arm.getCurrentPosition() > 0){
+                pArmToLanderFromRest(0.0018, -4048, arm);
+            }
+        }
         if(gamepad2.x){
             if (arm.getCurrentPosition() < 0){
                 pArmToLanderFromGround(0.0018, 0, arm);

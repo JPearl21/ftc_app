@@ -363,7 +363,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
             sleep(1000);
 
-            if(detector.isFound()){ //right position
+            if(detector.isFound()){//detector
                 tr.setPower(-1);
                 tl.setPower(1);
                 br.setPower(1);
