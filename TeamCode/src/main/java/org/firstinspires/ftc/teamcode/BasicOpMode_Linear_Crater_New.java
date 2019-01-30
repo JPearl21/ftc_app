@@ -150,38 +150,12 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
         sleep(100);
 
         //strafe out
-        tr.setPower(-1);
-        tl.setPower(1);
-        br.setPower(-1);
-        bl.setPower(1);
-        sleep(500);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
+        right_strafe(1,500);
 
 
-        //turn left
-        tr.setPower(1);
-        tl.setPower(-1);
-        br.setPower(-1);
-        bl.setPower(1);
-        sleep(1250);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
+        left_turn(1,1250);
 
-        //backward
-        tr.setPower(-1);
-        tl.setPower(-1);
-        br.setPower(-1);
-        bl.setPower(-1);
-        sleep(150);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
+        backwards(1,150);
 
         sleep(1000);
 
@@ -379,5 +353,71 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
         }
         arm.setPower(0);
         telemetry.addData("value:", arm.getCurrentPosition());
+    }
+    private void forward (double power, long time){
+        tr.setPower(power);
+        tl.setPower(power);
+        br.setPower(power);
+        bl.setPower(power);
+        sleep(time);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+    }
+    private void backwards (double power, long time){
+        tr.setPower(-power);
+        tl.setPower(-power);
+        br.setPower(-power);
+        bl.setPower(-power);
+        sleep(time);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+    }
+    private void right_turn (double power, long time){
+        tr.setPower(-power);
+        tl.setPower(power);
+        br.setPower(power);
+        bl.setPower(-power);
+        sleep(time);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+    }
+    private void left_turn(double power, long time){
+        tr.setPower(power);
+        tl.setPower(-power);
+        br.setPower(-power);
+        bl.setPower(power);
+        sleep(time);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+    }
+    private void right_strafe(double power, long time){
+        tr.setPower(-power);
+        tl.setPower(power);
+        br.setPower(-power);
+        bl.setPower(power);
+        sleep(time);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+    }
+    private void left_strafe(double power, long time){
+        tr.setPower(power);
+        tl.setPower(-power);
+        br.setPower(power);
+        bl.setPower(-power);
+        sleep(time);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
     }
 }
