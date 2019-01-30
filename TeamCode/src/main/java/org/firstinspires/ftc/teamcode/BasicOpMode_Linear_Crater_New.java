@@ -109,7 +109,7 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
         n1 = hardwareMap.dcMotor.get("n1");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -191,14 +191,17 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
             tl.setPower(0.5);
             br.setPower(0.5);
             bl.setPower(0.5);
-            sleep(750);
+            sleep(500);
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
             bl.setPower(0);
 
-            pArmToLanderFromRest(0.0018, -25, arm);
-            telemetry.addLine(String.valueOf(arm.getCurrentPosition()));
+            arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            arm.setPower(-0.5);
+            sleep(3750);
+            arm.setPower(0);
 
         } else {//middle position
             sleep(750);
@@ -234,7 +237,7 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
                 tl.setPower(-1);
                 br.setPower(1);
                 bl.setPower(-1);
-                sleep(100);
+                sleep(75);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
@@ -247,11 +250,17 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
                 tl.setPower(0.5);
                 br.setPower(0.5);
                 bl.setPower(0.5);
-                sleep(750);
+                sleep(500);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
                 bl.setPower(0);
+
+                arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+                arm.setPower(-0.5);
+                sleep(3750);
+                arm.setPower(0);
             } else { //right position
 
                 sleep(550);
@@ -298,7 +307,7 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
                 tl.setPower(-1);
                 br.setPower(1);
                 bl.setPower(-1);
-                sleep(150);
+                sleep(125);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
@@ -310,11 +319,17 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
                 tl.setPower(0.5);
                 br.setPower(0.5);
                 bl.setPower(0.5);
-                sleep(750);
+                sleep(500);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
                 bl.setPower(0);
+
+                arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+                arm.setPower(-0.5);
+                sleep(3750);
+                arm.setPower(0);
             }
         }
 

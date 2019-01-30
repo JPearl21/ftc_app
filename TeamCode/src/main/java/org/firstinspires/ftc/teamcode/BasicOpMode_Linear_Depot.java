@@ -201,6 +201,11 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
             forward(1,2000);
 
+            arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            arm.setPower(-0.5);
+            sleep(3750);
+            arm.setPower(0);
             /*sleep(250);
             //forwards
             tr.setPower(0.5);
@@ -294,7 +299,11 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
 
 
+                arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+                arm.setPower(-0.5);
+                sleep(3750);
+                arm.setPower(0);
                 //far right position cube
             } else { //right position
 
@@ -335,6 +344,12 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
                 sleep(100);
 
                 left_strafe(1,150);
+
+                arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+                arm.setPower(-0.5);
+                sleep(3750);
+                arm.setPower(0);
             }
 
         }

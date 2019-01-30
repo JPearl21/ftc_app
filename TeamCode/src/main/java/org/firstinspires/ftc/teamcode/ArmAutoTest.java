@@ -109,7 +109,7 @@ public class ArmAutoTest extends LinearOpMode {
         n1 = hardwareMap.dcMotor.get("n1");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -124,15 +124,15 @@ public class ArmAutoTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        telemetry.addData("value:", arm.getCurrentPosition());
 
+        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+      //  pArmToLanderFromRest(0.02, -350, arm);
         arm.setPower(-0.5);
-        sleep(500);
+        sleep(3750);
         arm.setPower(0);
-        //pArmToLanderFromRest(0.0018, -25, arm);
         telemetry.addData("value:", arm.getCurrentPosition());
 
-        sleep(2000);
+
         runtime.reset();
     }
 
