@@ -60,8 +60,8 @@ import java.lang.annotation.Target;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous (name="Autonomous Crater_New", group="Linear Opmode")
-public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
+@Autonomous (name="Auto Arm Test", group="Linear Opmode")
+public class ArmAutoTest extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -124,226 +124,15 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+        telemetry.addData("value:", arm.getCurrentPosition());
 
-        n1.setPower(-1 + Math.random() * 2);
-
-        pEncoderMotorRun(0.0018, 2390, lift);
-
-        if (runtime.time() > 2.5 && lift.isBusy()) {
-            lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            lift.setPower(0);
-        }
-
-        lift.setPower(0);
-
-        //turn right
-        tr.setPower(0);
-        tl.setPower(1);
-        br.setPower(1);
-        bl.setPower(0);
-        sleep(150);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
-
-        sleep(100);
-
-        //strafe out
-        tr.setPower(-1);
-        tl.setPower(1);
-        br.setPower(-1);
-        bl.setPower(1);
+        arm.setPower(-0.5);
         sleep(500);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
+        arm.setPower(0);
+        //pArmToLanderFromRest(0.0018, -25, arm);
+        telemetry.addData("value:", arm.getCurrentPosition());
 
-
-        //turn left
-        tr.setPower(1);
-        tl.setPower(-1);
-        br.setPower(-1);
-        bl.setPower(1);
-        sleep(1250);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
-
-        //backward
-        tr.setPower(-1);
-        tl.setPower(-1);
-        br.setPower(-1);
-        bl.setPower(-1);
-        sleep(150);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
-
-        sleep(1000);
-
-        if(detector.isFound()) { //left position
-            //turn left
-            tr.setPower(1);
-            tl.setPower(-1);
-            br.setPower(-1);
-            bl.setPower(1);
-            sleep(425);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
-
-            sleep(1000);
-
-            //strafe left
-           /* tr.setPower(1);
-            tl.setPower(-1);
-            br.setPower(1);
-            bl.setPower(-1);
-            sleep(120);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
-
-            sleep(500);*/
-
-            //straight
-            tr.setPower(0.5);
-            tl.setPower(0.5);
-            br.setPower(0.5);
-            bl.setPower(0.5);
-            sleep(750);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
-
-            pArmToLanderFromRest(0.0018, -25, arm);
-            telemetry.addLine(String.valueOf(arm.getCurrentPosition()));
-
-        } else {//middle position
-            sleep(750);
-            //forward
-            tr.setPower(1);
-            tl.setPower(1);
-            br.setPower(1);
-            bl.setPower(1);
-            sleep(150);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
-
-            sleep(1000);
-
-            if (detector.isFound()) {
-                //turn left
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(-1);
-                bl.setPower(1);
-                sleep(500);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-
-                sleep(1000);
-
-                //strafe left
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(100);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-
-                sleep(500);
-
-                //straight
-                tr.setPower(0.5);
-                tl.setPower(0.5);
-                br.setPower(0.5);
-                bl.setPower(0.5);
-                sleep(750);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-            } else { //right position
-
-                sleep(550);
-
-                //First Strafe
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(100);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-
-                sleep(550);
-                //forward
-                tr.setPower(1);
-                tl.setPower(1);
-                br.setPower(1);
-                bl.setPower(1);
-                sleep(275);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-
-                sleep(550);
-                //turn left
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(-1);
-                bl.setPower(1);
-                sleep(500);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-
-                sleep(500);
-
-                //strafe left
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(150);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-
-                sleep(750);
-                //straight
-                tr.setPower(0.5);
-                tl.setPower(0.5);
-                br.setPower(0.5);
-                bl.setPower(0.5);
-                sleep(750);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-            }
-        }
-
+        sleep(2000);
         runtime.reset();
     }
 
