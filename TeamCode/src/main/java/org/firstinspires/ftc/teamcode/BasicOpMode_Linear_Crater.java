@@ -60,12 +60,12 @@ import java.lang.annotation.Target;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous (name="Autonomous Crater_New", group="Linear Opmode")
-public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
+@Autonomous (name="Autonomous Crater", group="Linear Opmode")
+public class BasicOpMode_Linear_Crater extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    DcMotor tl, tr, bl, br, arm, lift, n1;
+    DcMotor tl, tr, bl, br, arm,lift, n1;
     private CRServo intake1, intake2, intake3, intake4;
     private GoldAlignDetector detector;
     private OpenGLMatrix lastLocation = null;
@@ -74,7 +74,7 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
     public void runOpMode() {
 
         telemetry.addData("Status", "Initialized");
-        telemetry.addData("Debbie", "Lilly");
+        telemetry.addData("Debbie" ,"Lilly");
         telemetry.update();
 
         detector = new GoldAlignDetector(); // Create detector
@@ -109,7 +109,7 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
         n1 = hardwareMap.dcMotor.get("n1");
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -125,18 +125,20 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        n1.setPower(-1 + Math.random() * 2);
+        n1.setPower(-1+Math.random()*2);
 
-        pEncoderMotorRun(0.0018, 2390, lift);
+        pEncoderMotorRun(0.0018,2390, lift);
 
-        if (runtime.time() > 2.5 && lift.isBusy()) {
+        if(runtime.time() >2.5 && lift.isBusy()){
             lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             lift.setPower(0);
         }
 
         lift.setPower(0);
 
-        //turn right
+        sleep(750);
+
+        //turn
         tr.setPower(0);
         tl.setPower(1);
         br.setPower(1);
@@ -150,62 +152,111 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
         sleep(100);
 
         //strafe out
-        right_strafe(1,500);
+        tr.setPower(-1);
+        tl.setPower(1);
+        br.setPower(-1);
+        bl.setPower(1);
+        sleep(500);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
 
 
-        left_turn(1,1250);
+        //turns
+        tr.setPower(1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(1);
+        sleep(1250);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
 
-        backwards(1,150);
+        tr.setPower(-1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(-1);
+        sleep(150);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+
 
         sleep(1000);
 
-        if(detector.isFound()) { //left position
-            //turn left
-            tr.setPower(1);
-            tl.setPower(-1);
-            br.setPower(-1);
-            bl.setPower(1);
-            sleep(425);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
-
-            sleep(1000);
-
-            //strafe left
-           /* tr.setPower(1);
-            tl.setPower(-1);
+        if(detector.isFound()){ //left position
+            telemetry.addLine("FOUND");
+            tr.setPower(-1);
+            tl.setPower(1);
             br.setPower(1);
             bl.setPower(-1);
-            sleep(120);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
-
-            sleep(500);*/
-
-            //straight
-            tr.setPower(0.5);
-            tl.setPower(0.5);
-            br.setPower(0.5);
-            bl.setPower(0.5);
             sleep(500);
             tr.setPower(0);
             tl.setPower(0);
             br.setPower(0);
             bl.setPower(0);
 
-            arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-            arm.setPower(-0.5);
-            sleep(3750);
-            arm.setPower(0);
-
-        } else {//middle position
             sleep(750);
-            //forward
+
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(-1);
+            bl.setPower(1);
+            sleep(145);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            tr.setPower(-0.6);
+            tl.setPower(-1);
+            br.setPower(-0.6);
+            bl.setPower(-1);
+            sleep(1000);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(1);
+            bl.setPower(-1);
+            sleep(250);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            tr.setPower(-1);
+            tl.setPower(-1);
+            br.setPower(-1);
+            bl.setPower(-1);
+            sleep(145);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            intake1.setPower(1);
+            intake2.setPower(-1);
+            intake3.setPower(1);
+            intake4.setPower(-1);
+            sleep(5500);
+            intake1.setPower(0);
+            intake2.setPower(0);
+            intake3.setPower(0);
+            intake4.setPower(0);
+
+
+        } else{
+            sleep(750);
+
             tr.setPower(1);
             tl.setPower(1);
             br.setPower(1);
@@ -218,49 +269,39 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
 
             sleep(1000);
 
-            if (detector.isFound()) {
-                //turn left
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(-1);
-                bl.setPower(1);
-                sleep(500);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-
-                sleep(1000);
-
-                //strafe left
-                tr.setPower(1);
-                tl.setPower(-1);
+            if(detector.isFound()){ //middle position
+                tr.setPower(-1);
+                tl.setPower(1);
                 br.setPower(1);
                 bl.setPower(-1);
-                sleep(75);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-
-                sleep(500);
-
-                //straight
-                tr.setPower(0.5);
-                tl.setPower(0.5);
-                br.setPower(0.5);
-                bl.setPower(0.5);
                 sleep(500);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
                 bl.setPower(0);
 
-                arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                tr.setPower(-1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(-1);
+                sleep(900);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
 
-                arm.setPower(-0.5);
-                sleep(3750);
-                arm.setPower(0);
+                intake1.setPower(1);
+                intake2.setPower(-1);
+                intake3.setPower(1);
+                intake4.setPower(-1);
+                sleep(5500);
+                intake1.setPower(0);
+                intake2.setPower(0);
+                intake3.setPower(0);
+                intake4.setPower(0);
+
+
+
             } else { //right position
 
                 sleep(550);
@@ -289,55 +330,158 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
                 bl.setPower(0);
 
                 sleep(550);
-                //turn left
+                //turn
+                tr.setPower(-1);
+                tl.setPower(1);
+                br.setPower(1);
+                bl.setPower(-1);
+                sleep(345);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                sleep(550);
+                //backwards
+
+                tr.setPower(-1);
+                tl.setPower(-1);
+                br.setPower(-1);
+                bl.setPower(-1);
+                sleep(1100);
+                tr.setPower(0);
+                tl.setPower(0);
+                br.setPower(0);
+                bl.setPower(0);
+
+                //right turn
                 tr.setPower(1);
                 tl.setPower(-1);
                 br.setPower(-1);
                 bl.setPower(1);
-                sleep(500);
+                sleep(135);
                 tr.setPower(0);
                 tl.setPower(0);
                 br.setPower(0);
                 bl.setPower(0);
 
-                sleep(500);
-
-                //strafe left
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(125);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-
-                sleep(750);
-                //straight
-                tr.setPower(0.5);
-                tl.setPower(0.5);
-                br.setPower(0.5);
-                bl.setPower(0.5);
-                sleep(500);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
-
-                arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-                arm.setPower(-0.5);
-                sleep(3750);
-                arm.setPower(0);
+                intake1.setPower(1);
+                intake2.setPower(-1);
+                intake3.setPower(1);
+                intake4.setPower(-1);
+                sleep(5500);
+                intake1.setPower(0);
+                intake2.setPower(0);
+                intake3.setPower(0);
+                intake4.setPower(0);
             }
+
         }
 
+
+
+
+
+
+        // lowers lift
+        /*pEncoderMotorRun(0.0018,2423, lift);
+
+        lift.setPower(0);
+
+        pEncoderMotorRun(0.0018, 1120, tl);
+        pEncoderMotorRun(0.0018, 1120, br);
+        tl.setPower(0);
+        bl.setPower(0);
+
+        sleep(100);
+
+        pEncoderMotorRun(0.0018, -1120, tr);
+        pEncoderMotorRun(0.0018, 1120, tl);
+        pEncoderMotorRun(0.0018, -1120, br);
+        pEncoderMotorRun(0.0018, 1120, bl);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        pEncoderMotorRun(0.0018, 1120, tr);
+        pEncoderMotorRun(0.0018, -1120, tl);
+        pEncoderMotorRun(0.0018, -1120, br);
+        pEncoderMotorRun(0.0018, 1120, bl);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        sleep(1000);
+
+        //moves forward
+       /* tr.setPower(-1);
+        tl.setPower(-1);
+        br.setPower(-1);
+        bl.setPower(-1);
+        sleep(675);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+
+        telemetry.addLine("Last known working, pre-delay");
+
+        sleep(750);
+
+        telemetry.addLine("Last known working, post-delay");
+
+        //outtake
+        intake1.setPower(1);
+        intake2.setPower(-1);
+        intake3.setPower(1);
+        intake4.setPower(-1);
+        telemetry.addLine("Outtake run");
+        sleep(5500);
+        intake1.setPower(0);
+        intake2.setPower(0);
+        intake3.setPower(0);
+        intake4.setPower(0);
+        telemetry.addLine("Outtake stopped"); */
+
+        /*if(detector.isFound()){
+            telemetry.addLine("Found");
+            pEncoderMotorRun(0.0018, -1120, tr);
+            pEncoderMotorRun(0.0018,1120, tl);
+            pEncoderMotorRun(0.0018,-1120,br);
+            pEncoderMotorRun(0.0018, 1120, bl);
+            tr.setPower(-1);
+            tl.setPower(1);
+            br.setPower(-1);
+            bl.setPower(1);
+            sleep(675);
+
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+        }
+        else{
+            telemetry.addLine("Not Aligned");
+            tr.setPower(-0.4);
+            tl.setPower(-0.4);
+            br.setPower(-0.4);
+            bl.setPower(-0.4);
+            sleep(800);
+            tr.setPower(0);
+            tl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+        }*/
+        //pArmToLanderFromRest(0.0018, -4080, arm);
+        //arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         runtime.reset();
+
+
     }
-
-
-
 
     private void pEncoderMotorRun(double kP, double target, DcMotor driveMotor) { //nate
         double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the robot's position
@@ -363,76 +507,16 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
     private void pArmToLanderFromRest(double kP, double target, DcMotor driveMotor) {
         double error = Math.abs(target - driveMotor.getCurrentPosition());//obtains the arm's position
         while (error > 1) {//allows the robot to continually operate
-            driveMotor.setPower(kP * -error);//-power because motor is going backwards toward ground
+            driveMotor.setPower(kP * -error);//-power bacause motor is going backwards toward ground
             error = Math.abs(target - driveMotor.getCurrentPosition());
         }
         arm.setPower(0);
         telemetry.addData("value:", arm.getCurrentPosition());
     }
-    private void forward (double power, long time){
-        tr.setPower(power);
-        tl.setPower(power);
-        br.setPower(power);
-        bl.setPower(power);
-        sleep(time);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
-    }
-    private void backwards (double power, long time){
-        tr.setPower(-power);
-        tl.setPower(-power);
-        br.setPower(-power);
-        bl.setPower(-power);
-        sleep(time);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
-    }
-    private void right_turn (double power, long time){
-        tr.setPower(-power);
-        tl.setPower(power);
-        br.setPower(power);
-        bl.setPower(-power);
-        sleep(time);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
-    }
-    private void left_turn(double power, long time){
-        tr.setPower(power);
-        tl.setPower(-power);
-        br.setPower(-power);
-        bl.setPower(power);
-        sleep(time);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
-    }
-    private void right_strafe(double power, long time){
-        tr.setPower(-power);
-        tl.setPower(power);
-        br.setPower(-power);
-        bl.setPower(power);
-        sleep(time);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
-    }
-    private void left_strafe(double power, long time){
-        tr.setPower(power);
-        tl.setPower(-power);
-        br.setPower(power);
-        bl.setPower(-power);
-        sleep(time);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
-    }
+
+
 }
+
+
+
+
