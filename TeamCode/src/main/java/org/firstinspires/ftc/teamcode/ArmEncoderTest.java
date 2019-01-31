@@ -17,6 +17,11 @@ public class ArmEncoderTest extends OpMode{
     public void loop() {
         if (gamepad1.a) {
             pEncoderMotorRun(0.001,-4048,arm);
+
+
+            if(gamepad1.dpad_up){arm.setPower(-1);}
+            if(gamepad1.dpad_down){arm.setPower(1);}
+            telemetry.addLine(String.valueOf(arm.getCurrentPosition()));
         }
     }
     private void pEncoderMotorRun(double kP, double target, DcMotor driveMotor) { //nate
