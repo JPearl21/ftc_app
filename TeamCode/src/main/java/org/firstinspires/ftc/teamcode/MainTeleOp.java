@@ -211,9 +211,9 @@ public class MainTeleOp extends OpMode{//cool bearl real cool
         double blPower = -(vtY) - vtX - vR;
         double brPower = -(vtY) + vtX + vR;
         // set motor powers
-        tl.setPower(-tlPower);
-        tr.setPower(-trPower);
-        bl.setPower(blPower);
-        br.setPower(brPower);
+        tl.setPower(-0.8*tlPower);
+        tr.setPower(-0.8*trPower);
+        bl.setPower(0.8*blPower);
+        br.setPower(0.8*brPower);
     }
 }

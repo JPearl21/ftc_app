@@ -150,37 +150,13 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         sleep(100);
 
         //strafe out
-        tr.setPower(-1);
-        tl.setPower(1);
-        br.setPower(-1);
-        bl.setPower(1);
-        sleep(500);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
+        right_strafe(1,500);
 
 
-        //turns
-        tr.setPower(1);
-        tl.setPower(-1);
-        br.setPower(-1);
-        bl.setPower(1);
-        sleep(1250);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
 
-        tr.setPower(-1);
-        tl.setPower(-1);
-        br.setPower(-1);
-        bl.setPower(-1);
-        sleep(150);
-        tr.setPower(0);
-        tl.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
+        left_turn(1,1250);
+
+        backwards(1,150);
 
 
 
@@ -188,73 +164,25 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 //left position cube
         if(detector.isFound()){ //left position
             telemetry.addLine("FOUND");
-            //turn right
-            tr.setPower(-1);
-            tl.setPower(1);
-            br.setPower(1);
-            bl.setPower(-1);
-            sleep(500);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
 
+            right_turn(1,500);
 
             sleep(750);
-            //strafe right
-            tr.setPower(-1);
-            tl.setPower(1);
-            br.setPower(-1);
-            bl.setPower(1);
-            sleep(145);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
-            //backwards
-            tr.setPower(-0.6);
-            tl.setPower(-0.6);
-            br.setPower(-0.6);
-            bl.setPower(-0.6);
-            sleep(1000);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
-            //turn right
-            tr.setPower(-1);
-            tl.setPower(1);
-            br.setPower(1);
-            bl.setPower(-1);
-            sleep(250);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
-            //backwards
-            tr.setPower(-0.5);
-            tl.setPower(-0.5);
-            br.setPower(-0.5);
-            bl.setPower(-0.5);
-            sleep(145);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
+
+            right_strafe(1,145);
+
+            backwards(0.6,1000);
+
+            right_turn(1,250);
+
+            backwards(0.5,145);
 
             sleep(100);
-            //strafe right
-            tr.setPower(-1);
-            tl.setPower(1);
-            br.setPower(-1);
-            bl.setPower(1);
-            sleep(275);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
+
+            right_strafe(1,325);
 
             sleep(100);
+
             intake1.setPower(1);
             intake2.setPower(-1);
             intake3.setPower(1);
@@ -266,29 +194,22 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             intake4.setPower(0);
 
             sleep(100);
-            //strafe right
-            tr.setPower(-1);
-            tl.setPower(1);
-            br.setPower(-1);
-            bl.setPower(1);
-            sleep(150);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
+
+            right_strafe(1,150);
 
             sleep(250);
-            //forwards
-            tr.setPower(1);
-            tl.setPower(1);
-            br.setPower(1);
-            bl.setPower(1);
-            sleep(2000);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
 
+            forward(1,2000);
+
+            sleep(250);
+
+            right_strafe(1, 75);
+
+            arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            arm.setPower(-0.5);
+            sleep(3750);
+            arm.setPower(0);
             /*sleep(250);
             //forwards
             tr.setPower(0.5);
@@ -350,39 +271,15 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
         } else{//middle position cube
             sleep(750);
-            //forward
-            tr.setPower(1);
-            tl.setPower(1);
-            br.setPower(1);
-            bl.setPower(1);
-            sleep(150);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
+
+            forward(1,150);
 
             sleep(1000);
 
-            if(detector.isFound()){ //right position
-                tr.setPower(-1);
-                tl.setPower(1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(500);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+            if(detector.isFound()){//detector
+                right_turn(1,500);
 
-                tr.setPower(-1);
-                tl.setPower(-1);
-                br.setPower(-1);
-                bl.setPower(-1);
-                sleep(900);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                backwards(1,900);
 
                 intake1.setPower(1);
                 intake2.setPower(-1);
@@ -396,104 +293,47 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
                 sleep(500);
 
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(-1);
-                bl.setPower(1);
-                sleep(250);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                left_turn(1,200);
 
                 sleep(300);
 
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(200);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                forward(1,25);
 
-                tr.setPower(1);
-                tl.setPower(1);
-                br.setPower(1);
-                bl.setPower(1);
-                sleep(2000);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                left_strafe(1,250);
 
+                forward(1,2000);
 
+                sleep(250);
 
+                left_strafe(1, 75);
 
+                arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+                arm.setPower(-0.5);
+                sleep(3750);
+                arm.setPower(0);
                 //far right position cube
             } else { //right position
 
                 sleep(550);
 
-                    //First Strafe
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(100);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+
+                left_strafe(1,100);
 
                 sleep(550);
-                    //forward
-                tr.setPower(1);
-                tl.setPower(1);
-                br.setPower(1);
-                bl.setPower(1);
-                sleep(275);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+
+                forward(1,275);
 
                 sleep(550);
-                //turn
-                tr.setPower(-1);
-                tl.setPower(1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(345);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+
+                right_turn(1,345);
 
                 sleep(550);
-                    //backwards
 
-                tr.setPower(-1);
-                tl.setPower(-1);
-                br.setPower(-1);
-                bl.setPower(-1);
-                sleep(1100);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                backwards(1,1100);
 
                 //left turn
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(-1);
-                bl.setPower(1);
-                sleep(135);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                left_turn(1,135);
 
                 intake1.setPower(1);
                 intake2.setPower(-1);
@@ -505,39 +345,26 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
                 intake3.setPower(0);
                 intake4.setPower(0);
 
+                right_turn(1, 50);
 
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(100);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                left_strafe(1,250);
 
-                tr.setPower(1);
-                tl.setPower(1);
-                br.setPower(1);
-                bl.setPower(1);
-                sleep(2000);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+
+                forward(1,2000);
 
                 sleep(100);
 
-                //strafe left
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(150);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                left_strafe(1,150);
+
+                sleep(250);
+
+                left_strafe(1, 75);
+
+                arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+                arm.setPower(-0.5);
+                sleep(3600);
+                arm.setPower(0);
             }
 
         }
@@ -676,6 +503,72 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         }
         arm.setPower(0);
         telemetry.addData("value:", arm.getCurrentPosition());
+    }
+    private void forward (double power, long time){
+        tr.setPower(power);
+        tl.setPower(power);
+        br.setPower(power);
+        bl.setPower(power);
+        sleep(time);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+    }
+    private void backwards (double power, long time){
+        tr.setPower(-power);
+        tl.setPower(-power);
+        br.setPower(-power);
+        bl.setPower(-power);
+        sleep(time);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+    }
+    private void right_turn (double power, long time){
+        tr.setPower(-power);
+        tl.setPower(power);
+        br.setPower(power);
+        bl.setPower(-power);
+        sleep(time);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+    }
+    private void left_turn(double power, long time){
+        tr.setPower(power);
+        tl.setPower(-power);
+        br.setPower(-power);
+        bl.setPower(power);
+        sleep(time);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+    }
+    private void right_strafe(double power, long time){
+        tr.setPower(-power);
+        tl.setPower(power);
+        br.setPower(-power);
+        bl.setPower(power);
+        sleep(time);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+    }
+    private void left_strafe(double power, long time){
+        tr.setPower(power);
+        tl.setPower(-power);
+        br.setPower(power);
+        bl.setPower(-power);
+        sleep(time);
+        tr.setPower(0);
+        tl.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
     }
 
 
