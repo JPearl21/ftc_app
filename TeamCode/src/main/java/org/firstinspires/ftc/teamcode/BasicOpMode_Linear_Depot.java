@@ -179,7 +179,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
             sleep(100);
 
-            right_strafe(1,275);
+            right_strafe(1,325);
 
             sleep(100);
 
@@ -200,6 +200,10 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
             sleep(250);
 
             forward(1,2000);
+
+            sleep(250);
+
+            right_strafe(1, 75);
 
             arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -289,15 +293,19 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
                 sleep(500);
 
-                left_turn(1,250);
+                left_turn(1,200);
 
                 sleep(300);
 
-                left_strafe(1,200);
+                forward(1,25);
+
+                left_strafe(1,250);
 
                 forward(1,2000);
 
+                sleep(250);
 
+                left_strafe(1, 75);
 
                 arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -337,7 +345,10 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
                 intake3.setPower(0);
                 intake4.setPower(0);
 
-                left_strafe(1,100);
+                right_turn(1, 50);
+
+                left_strafe(1,250);
+
 
                 forward(1,2000);
 
@@ -345,10 +356,14 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
                 left_strafe(1,150);
 
+                sleep(250);
+
+                left_strafe(1, 75);
+
                 arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
                 arm.setPower(-0.5);
-                sleep(3750);
+                sleep(3600);
                 arm.setPower(0);
             }
 
