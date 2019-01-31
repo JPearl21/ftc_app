@@ -161,15 +161,7 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
 
         if(detector.isFound()) { //left position
             //turn left
-            tr.setPower(1);
-            tl.setPower(-1);
-            br.setPower(-1);
-            bl.setPower(1);
-            sleep(425);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
+           left_turn(1,425);
 
             sleep(1000);
 
@@ -187,15 +179,7 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
             sleep(500);*/
 
             //straight
-            tr.setPower(0.5);
-            tl.setPower(0.5);
-            br.setPower(0.5);
-            bl.setPower(0.5);
-            sleep(500);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
+           forward(.5,500);
 
             arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -206,55 +190,23 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
         } else {//middle position
             sleep(750);
             //forward
-            tr.setPower(1);
-            tl.setPower(1);
-            br.setPower(1);
-            bl.setPower(1);
-            sleep(150);
-            tr.setPower(0);
-            tl.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
+           forward(1,150);
 
             sleep(1000);
 
             if (detector.isFound()) {
                 //turn left
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(-1);
-                bl.setPower(1);
-                sleep(500);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+               left_turn(1,500);
 
                 sleep(1000);
 
                 //strafe left
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(75);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                left_strafe(1,75);
 
                 sleep(500);
 
                 //straight
-                tr.setPower(0.5);
-                tl.setPower(0.5);
-                br.setPower(0.5);
-                bl.setPower(0.5);
-                sleep(500);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                forward(.5,500);
 
                 arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -265,65 +217,25 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
 
                 sleep(550);
 
-                //First Strafe
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(100);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                //left Strafe
+                left_strafe(1,100);
 
                 sleep(550);
                 //forward
-                tr.setPower(1);
-                tl.setPower(1);
-                br.setPower(1);
-                bl.setPower(1);
-                sleep(275);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                forward(1,275);
 
                 sleep(550);
                 //turn left
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(-1);
-                bl.setPower(1);
-                sleep(500);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                left_turn(1,500);
 
                 sleep(500);
 
                 //strafe left
-                tr.setPower(1);
-                tl.setPower(-1);
-                br.setPower(1);
-                bl.setPower(-1);
-                sleep(125);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+                left_strafe(1,125);
 
                 sleep(750);
                 //straight
-                tr.setPower(0.5);
-                tl.setPower(0.5);
-                br.setPower(0.5);
-                bl.setPower(0.5);
-                sleep(500);
-                tr.setPower(0);
-                tl.setPower(0);
-                br.setPower(0);
-                bl.setPower(0);
+               forward(.5,500);
 
                 arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
