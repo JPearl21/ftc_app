@@ -153,7 +153,7 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
         right_strafe(1,500);
 
 
-        left_turn(1,1250);
+        left_turn(1,1400);
 
         backwards(1,150);
 
@@ -161,7 +161,7 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
 
         if(detector.isFound()) { //left position
             //turn left
-           left_turn(1,425);
+           left_turn(1,500);
 
             sleep(1000);
 
