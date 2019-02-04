@@ -136,6 +136,7 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
 
         lift.setPower(0);
 
+        sleep(50);
         //turn right
         tr.setPower(0);
         tl.setPower(1);
@@ -153,7 +154,7 @@ public class BasicOpMode_Linear_Crater_New extends LinearOpMode {
         right_strafe(1,500);
 
 
-        left_turn(1,1400);
+        left_turn(1,1250);
 
         backwards(1,150);
 

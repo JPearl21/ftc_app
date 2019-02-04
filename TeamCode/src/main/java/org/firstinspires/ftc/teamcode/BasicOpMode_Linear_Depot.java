@@ -135,7 +135,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
         }
 
         lift.setPower(0);
-
+        sleep(50);
         //turn
         tr.setPower(0);
         tl.setPower(1);
@@ -201,7 +201,7 @@ public class BasicOpMode_Linear_Depot extends LinearOpMode {
 
             sleep(250);
 
-            forward(1,2000);
+            forward(1,1900);
 
             sleep(250);
 
